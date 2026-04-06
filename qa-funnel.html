@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA Funnel</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0ede8;color:#1a1a18;font-size:14px;padding:1.5rem;}
+h2{font-size:18px;font-weight:500;margin-bottom:3px;}
+.sub{font-size:12px;color:#6b6b67;margin-bottom:1.25rem;}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1rem;}
+.tab{font-size:12px;padding:5px 12px;border-radius:8px;border:0.5px solid rgba(0,0,0,.15);background:transparent;color:#6b6b67;cursor:pointer;}
+.tab:hover{background:#fff;}.tab.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1rem 1.25rem;}
+.ctitle{font-size:11px;font-weight:500;color:#9b9b96;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;background:#E6F1FB;color:#0C447C;}
+
+/* Stream heads */
+.stream-heads{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.sh{border-radius:8px;padding:8px 10px;text-align:center;}
+.sh-in{background:#E6F1FB;border:1px solid #185FA580;}
+.sh-out{background:#E1F5EE;border:1px solid #0F6E5680;}
+.sh-lbl{font-size:11px;font-weight:500;margin-bottom:2px;}
+.sh-n{font-size:22px;font-weight:500;}
+.sh-sub{font-size:10px;color:#6b6b67;}
+
+/* Conv to RS */
+.conv-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;}
+.cb{border-radius:8px;padding:7px 10px;text-align:center;}
+.cb-in{background:#E6F1FB;border:1px solid #185FA540;}
+.cb-out{background:#E1F5EE;border:1px solid #0F6E5640;}
+.cb-lbl{font-size:10px;color:#6b6b67;margin-bottom:2px;}
+.cb-val{font-size:18px;font-weight:500;}
+.cb-det{font-size:10px;color:#9b9b96;}
+
+/* Merge */
+.merge-line{display:flex;align-items:center;gap:0;margin:4px 0 6px;}
+.ml-l{flex:1;height:1px;background:linear-gradient(to right,#185FA5,#aaa);}
+.ml-r{flex:1;height:1px;background:linear-gradient(to left,#0F6E56,#aaa);}
+.ml-dot{width:8px;height:8px;border-radius:50%;background:#888780;flex-shrink:0;}
+.merge-label{text-align:center;font-size:11px;color:#9b9b96;margin-bottom:6px;}
+
+/* Pipeline stages */
+.sr{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.sl2{font-size:12px;min-width:160px;font-weight:500;}
+.sbw{flex:1;height:20px;background:#f0ede8;border-radius:3px;overflow:hidden;}
+.sb{height:100%;border-radius:3px;}
+.sn{font-size:12px;font-weight:500;min-width:28px;text-align:right;}
+.sc2{font-size:11px;min-width:36px;text-align:right;}
+.sarr{text-align:center;font-size:12px;color:#9b9b96;margin:1px 0 1px 168px;}
+.hired-box{background:#EAF3DE;border:1px solid #3B6D11;border-radius:8px;padding:8px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;}
+.hb-l{font-size:12px;font-weight:500;color:#27500A;}
+.hb-r{text-align:right;font-size:11px;color:#3B6D11;}
+
+/* Archive reasons */
+.rr{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.rl{font-size:11px;min-width:200px;}
+.rbw{flex:1;height:12px;background:#f0ede8;border-radius:3px;overflow:hidden;}
+.rb{height:100%;border-radius:3px;background:#E24B4A66;border:0.5px solid #E24B4A;}
+.rn{font-size:11px;color:#6b6b67;min-width:22px;text-align:right;}
+
+/* Current */
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.mc{background:#f5f5f3;border-radius:8px;padding:.7rem .9rem;}
+.ml3{font-size:11px;color:#6b6b67;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em;}
+.mv{font-size:20px;font-weight:500;}.ms{font-size:11px;color:#9b9b96;}
+.mv.b{color:#185FA5;}.mv.g{color:#0F6E56;}.mv.r{color:#E24B4A;}.mv.gr{color:#888780;}
+
+.info-box{border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px;}
+.ib-warn{background:#FFF9E6;border:1px solid #FAC775;}
+.ib-title{font-weight:500;color:#633806;margin-bottom:5px;}
+.ib-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;}
+.ib-k{color:#6b6b67;}.ib-v{font-weight:500;}
+
+/* Forecast */
+.sw{margin-bottom:10px;}
+.sl3{display:flex;justify-content:space-between;font-size:12px;color:#6b6b67;margin-bottom:3px;}
+input[type=range]{width:100%;accent-color:#185FA5;}
+input[type=number]{accent-color:#185FA5;}
+.fbox{background:#E6F1FB;border:1px solid #185FA5;border-radius:10px;padding:.85rem 1rem;margin-bottom:8px;}
+.ftitle{font-size:12px;font-weight:500;color:#0C447C;margin-bottom:7px;}
+.frow{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:0.5px solid rgba(24,95,165,.1);}
+.frow:last-child{border:none;}
+.fk{font-size:12px;color:#185FA5;}.fv{font-size:14px;font-weight:500;color:#0C447C;}
+.fnote{font-size:11px;color:#6b6b67;font-style:italic;}
+.vi{width:65px;font-size:11px;padding:2px 5px;border:0.5px solid rgba(0,0,0,.2);border-radius:5px;background:#f5f5f3;color:#1a1a18;}
+</style>
+</head>
+<body>
+<h2>QA Hiring Funnel — прогноз</h2>
+<p class="sub">Два потоки: Inbound (Application Review) і Outbound (New Lead/Sourced) · зливаються на Recruitment Screening</p>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="sel(0,this)">Junior QA — Social Discovery</button>
+  <button class="tab" onclick="sel(1,this)">Junior QA — Affemity</button>
+  <button class="tab" onclick="sel(2,this)">Середнє</button>
+  <button class="tab" onclick="sel(3,this)">Віртуальна</button>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="ctitle" id="fTitle">Воронка · два потоки входу</div>
+    <div class="stream-heads" id="sHeads"></div>
+    <div class="conv-row" id="cRow"></div>
+    <div class="merge-line"><div class="ml-l"></div><div class="ml-dot"></div><div class="ml-r"></div></div>
+    <div class="merge-label" id="mLabel"></div>
+    <div id="pipeline"></div>
+    <div id="reasons"></div>
+  </div>
+
+  <div class="card">
+    <div class="ctitle">Поточна вакансія — QA Engineer <span class="badge">Open · 4д</span></div>
+    <div class="mg" id="curMetrics"></div>
+    <div class="ctitle">Поточний стан по стейджах</div>
+    <div id="curStages"></div>
+    <div style="margin-top:14px;">
+      <div class="ctitle">Прогноз до закриття</div>
+      <div class="sw">
+        <div class="sl3"><span>Днів залишилось до дедлайну</span><span id="dl-o" style="font-weight:500;color:#185FA5;">56</span></div>
+        <input type="range" min="1" max="60" value="56" id="dL" oninput="upF()">
+      </div>
+      <div class="sw">
+        <div class="sl3"><span>Inbound (App Review) / тиждень</span><span id="pi-o" style="font-weight:500;color:#185FA5;">5</span></div>
+        <input type="range" min="0" max="30" value="5" id="pI" oninput="upF()">
+      </div>
+      <div class="sw">
+        <div class="sl3"><span>Outbound (New Lead) / тиждень</span><span id="po-o" style="font-weight:500;color:#0F6E56;">0</span></div>
+        <input type="range" min="0" max="30" value="0" id="pO" oninput="upF()">
+      </div>
+      <div class="fbox" id="fBox"></div>
+      <p class="fnote" id="fNote"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASES = [
+  {
+    name:"Junior QA — Social Discovery", days:25, hired:1,
+    ib:{total:68, toRS:4},
+    ob:{total:18, toRS:5},
+    pipe:[
+      {s:"Recruitment Screening", n:9,  c:"#185FA5"},
+      {s:"CV Review",             n:8,  c:"#378ADD"},
+      {s:"Technical Screening",   n:3,  c:"#0F6E56"},
+      {s:"Tech Interview",        n:2,  c:"#1D9E75"},
+      {s:"Final Interview",       n:1,  c:"#3B6D11"},
+      {s:"Offer",                 n:1,  c:"#639922"},
+    ],
+    reasons:[
+      {r:"Remote/Kyiv location",n:40},{r:"Underqualified",n:8},{r:"Another candidate chosen",n:7},
+      {r:"Over budget",n:4},{r:"Irrelevant experience",n:3},{r:"Not Interested",n:2},{r:"Low Hard skills",n:2},
+    ]
+  },
+  {
+    name:"Junior QA — Affemity", days:172, hired:1,
+    ib:{total:206, toRS:28},
+    ob:{total:101, toRS:28},
+    pipe:[
+      {s:"Recruitment Screening", n:56,  c:"#185FA5"},
+      {s:"CV Review",             n:28,  c:"#378ADD"},
+      {s:"Technical Screening",   n:10,  c:"#0F6E56"},
+      {s:"Tech Interview",        n:7,   c:"#1D9E75"},
+      {s:"Final Interview",       n:1,   c:"#3B6D11"},
+      {s:"Offer",                 n:1,   c:"#639922"},
+    ],
+    reasons:[
+      {r:"Remote/Kyiv location",n:87},{r:"Underqualified",n:33},{r:"Another candidate chosen",n:28},
+      {r:"Over budget",n:18},{r:"Not Interested",n:17},{r:"Low Hard skills",n:12},{r:"Low Soft skills",n:8},
+    ]
+  },
+  {
+    name:"Середнє (2 вакансії)", days:99, hired:1,
+    ib:{total:137, toRS:16},
+    ob:{total:60,  toRS:17},
+    pipe:[
+      {s:"Recruitment Screening", n:33,  c:"#185FA5"},
+      {s:"CV Review",             n:18,  c:"#378ADD"},
+      {s:"Technical Screening",   n:7,   c:"#0F6E56"},
+      {s:"Tech Interview",        n:5,   c:"#1D9E75"},
+      {s:"Final Interview",       n:1,   c:"#3B6D11"},
+      {s:"Offer",                 n:1,   c:"#639922"},
+    ],
+    reasons:[
+      {r:"Remote/Kyiv location",n:64},{r:"Underqualified",n:21},{r:"Another candidate chosen",n:18},
+      {r:"Over budget",n:11},{r:"Not Interested",n:10},{r:"Low Hard skills",n:7},
+    ]
+  },
+  {
+    name:"Віртуальна вакансія", days:60, hired:1, isV:true,
+    ib:{total:100, toRS:10, convPct:10},
+    ob:{total:50,  toRS:15, convPct:28},
+    pipe:[
+      {s:"Recruitment Screening", n:25, c:"#185FA5"},
+      {s:"CV Review",             n:15, c:"#378ADD"},
+      {s:"Technical Screening",   n:8,  c:"#0F6E56"},
+      {s:"Tech Interview",        n:4,  c:"#1D9E75"},
+      {s:"Final Interview",       n:2,  c:"#3B6D11"},
+      {s:"Offer",                 n:1,  c:"#639922"},
+    ],
+    reasons:[]
+  },
+];
+
+let bi = 0;
+
+function sel(i, btn) {
+  bi = i;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderFunnel();
+  upF();
+}
+
+function pctColor(p) {
+  return p < 10 ? '#E24B4A' : p < 25 ? '#BA7517' : '#0F6E56';
+}
+
+function renderFunnel() {
+  const b = BASES[bi];
+  const iv = !!b.isV;
+  const ibPct  = Math.round(b.ib.toRS / b.ib.total * 100);
+  const obPct  = Math.round(b.ob.toRS / b.ob.total * 100);
+  const rsTotal = b.ib.toRS + b.ob.toRS;
+  const grand   = b.ib.total + b.ob.total;
+
+  // Stream heads
+  const vn = (val, key, sub) => iv
+    ? `<input class="vi" type="number" min="0" value="${val}" onchange="upV('${key}','${sub}',this.value)">`
+    : `<div class="sh-n">${val}</div>`;
+
+  document.getElementById('sHeads').innerHTML = `
+    <div class="sh sh-in">
+      <div class="sh-lbl" style="color:#0C447C;">Inbound</div>
+      ${vn(b.ib.total,'ib','total')}
+      <div class="sh-sub">Application Review</div>
+    </div>
+    <div class="sh sh-out">
+      <div class="sh-lbl" style="color:#085041;">Outbound</div>
+      ${vn(b.ob.total,'ob','total')}
+      <div class="sh-sub">New Lead / Sourced</div>
+    </div>`;
+
+  // Conv badges
+  if(iv) {
+    document.getElementById('cRow').innerHTML = `
+      <div class="cb cb-in">
+        <div class="cb-lbl">Inbound → RS (%)</div>
+        <input class="vi" type="number" min="0" max="100" value="${b.ib.convPct??10}"
+          style="width:100%;font-size:18px;font-weight:500;text-align:center;margin:4px 0;"
+          onchange="upVConv('ib',this.value)">
+        <div class="cb-det">→ ${Math.round((b.ib.convPct??10)/100*b.ib.total)} з ${b.ib.total}</div>
+      </div>
+      <div class="cb cb-out">
+        <div class="cb-lbl">Outbound → RS (%)</div>
+        <input class="vi" type="number" min="0" max="100" value="${b.ob.convPct??28}"
+          style="width:100%;font-size:18px;font-weight:500;text-align:center;margin:4px 0;"
+          onchange="upVConv('ob',this.value)">
+        <div class="cb-det">→ ${Math.round((b.ob.convPct??28)/100*b.ob.total)} з ${b.ob.total}</div>
+      </div>`;
+  } else {
+    document.getElementById('cRow').innerHTML = `
+      <div class="cb cb-in">
+        <div class="cb-lbl">Inbound → RS</div>
+        <div class="cb-val" style="color:${pctColor(ibPct)};">${ibPct}%</div>
+        <div class="cb-det">(${b.ib.toRS} з ${b.ib.total})</div>
+      </div>
+      <div class="cb cb-out">
+        <div class="cb-lbl">Outbound → RS</div>
+        <div class="cb-val" style="color:${pctColor(obPct)};">${obPct}%</div>
+        <div class="cb-det">(${b.ob.toRS} з ${b.ob.total})</div>
+      </div>`;
+  }
+
+  document.getElementById('mLabel').textContent = `↓ злиття на RS (${rsTotal} кандидатів) ↓`;
+
+  // Pipeline
+  let ph = '';
+  b.pipe.forEach((row, i) => {
+    const prev = i === 0 ? rsTotal : b.pipe[i-1].n;
+    const conv = Math.round(row.n / prev * 100);
+    const pct  = Math.round(row.n / rsTotal * 100);
+    const cc   = conv < 20 ? '#E24B4A' : conv < 50 ? '#BA7517' : '#0F6E56';
+    if(iv) {
+      ph += `<div class="sr">
+        <div class="sl2">${row.s}</div>
+        <input class="vi" type="number" min="0" value="${row.n}" onchange="upVP(${i},this.value)">
+        <div class="sc2" style="color:${cc};">${conv}%</div>
+      </div>`;
+    } else {
+      ph += `<div class="sr">
+        <div class="sl2">${row.s}</div>
+        <div class="sbw"><div class="sb" style="width:${pct}%;background:${row.c};"></div></div>
+        <div class="sn">${row.n}</div>
+        <div class="sc2" style="color:${cc};">${conv}%</div>
+      </div>`;
+    }
+    if(i < b.pipe.length-1) ph += `<div class="sarr">↓</div>`;
+  });
+  ph += `<div class="hired-box">
+    <div><div class="hb-l">Hired: 1</div><div style="font-size:10px;color:#3B6D11;">${b.days} днів · ${grand} кандидатів</div></div>
+    <div class="hb-r"><div>Загальна конверсія</div><div style="font-size:16px;font-weight:500;color:#27500A;">1 : ${grand}</div></div>
+  </div>`;
+  document.getElementById('pipeline').innerHTML = ph;
+
+  // Reasons
+  if(!iv && b.reasons.length) {
+    const maxR = Math.max(...b.reasons.map(r=>r.n));
+    let rh = '<div class="ctitle" style="margin-top:12px;">Причини відмов</div>';
+    b.reasons.slice(0,6).forEach(r=>{
+      rh+=`<div class="rr"><div class="rl">${r.r}</div><div class="rbw"><div class="rb" style="width:${Math.round(r.n/maxR*100)}%;"></div></div><div class="rn">${r.n}</div></div>`;
+    });
+    document.getElementById('reasons').innerHTML = rh;
+  } else {
+    document.getElementById('reasons').innerHTML = iv ? '<p style="font-size:11px;color:#BA7517;margin-top:8px;">Редагуй числа — прогноз перерахується автоматично.</p>' : '';
+  }
+}
+
+function renderCurrent() {
+  // Реальні дані з Ashby Candidate Pipeline + Sankey:
+  // New: 38 → Application Review
+  // App Review → Contacted: 7, → Archived: 30, → (залишився в App Review: 1)
+  // Contacted (7): → RS: 1, → Archived: 3, → ще в Contacted: 3
+  // Разом активних (Active): 4 = 3 Contacted + 1 RS
+  // Archived: 33
+  document.getElementById('curMetrics').innerHTML = `
+    <div class="mc"><div class="ml3">Inbound всього</div><div class="mv b">38</div><div class="ms">App Review</div></div>
+    <div class="mc"><div class="ml3">Активних зараз</div><div class="mv g">4</div><div class="ms">3 Contacted + 1 RS</div></div>
+    <div class="mc"><div class="ml3">Archived</div><div class="mv r">33</div><div class="ms">відсіяно</div></div>`;
+
+  document.getElementById('curStages').innerHTML = `
+    <div class="info-box ib-warn">
+      <div class="ib-title">Розбивка потоку (38 inbound · 0 outbound)</div>
+      <div class="ib-grid">
+        <div class="ib-k">App Review → Contacted</div><div class="ib-v" style="color:#378ADD;">7</div>
+        <div class="ib-k">App Review → Archived</div><div class="ib-v" style="color:#E24B4A;">30</div>
+        <div class="ib-k">App Review (залишився)</div><div class="ib-v" style="color:#185FA5;">1</div>
+        <div class="ib-k" style="border-top:0.5px solid #FAC775;padding-top:4px;margin-top:2px;">Contacted → RS</div>
+        <div class="ib-v" style="color:#0F6E56;border-top:0.5px solid #FAC775;padding-top:4px;margin-top:2px;">1 (14%)</div>
+        <div class="ib-k">Contacted → Archived</div><div class="ib-v" style="color:#E24B4A;">3</div>
+        <div class="ib-k">Contacted (ще активні)</div><div class="ib-v" style="color:#378ADD;">3</div>
+      </div>
+    </div>
+    ${[
+      {s:"Application Review (1 активний)", n:1,  c:"#185FA5"},
+      {s:"Contacted (3 активних)",          n:3,  c:"#378ADD"},
+      {s:"Recruitment Screening",           n:1,  c:"#0F6E56"},
+      {s:"Archived",                        n:33, c:"#E24B4A"},
+    ].map(s=>`<div class="sr" style="margin-bottom:4px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:${s.c};flex-shrink:0;"></div>
+      <div style="font-size:12px;flex:1;padding-left:6px;">${s.s}</div>
+      <div style="font-size:13px;font-weight:500;color:${s.c};">${s.n}</div>
+    </div>`).join('')}
+    <div style="margin-top:8px;padding:7px 10px;background:#FCEBEB;border:1px solid #E24B4A80;border-radius:8px;font-size:11px;">
+      <span style="font-weight:500;color:#A32D2D;">Outbound не запущений</span>
+      <span style="color:#6b6b67;margin-left:6px;">— по закритих вакансіях outbound давав 28% конверсії в RS vs 6–14% inbound</span>
+    </div>`;
+}
+
+function upF() {
+  const dL = +document.getElementById('dL').value;
+  const pI = +document.getElementById('pI').value;
+  const pO = +document.getElementById('pO').value;
+  document.getElementById('dl-o').textContent = dL;
+  document.getElementById('pi-o').textContent = pI;
+  document.getElementById('po-o').textContent = pO;
+
+  const b = BASES[bi];
+  const grand = b.ib.total + b.ob.total;
+  const wL = dL / 7;
+  const newI = Math.round(pI * wL);
+  const newO = Math.round(pO * wL);
+  const currTotal = 38;
+
+  const ibConv = b.ib.toRS / b.ib.total;
+  const obConv = b.ob.toRS / b.ob.total;
+  const projRS = Math.round(newI * ibConv + newO * obConv);
+
+  const rsTotal = b.ib.toRS + b.ob.toRS;
+  const rsToHire = 1 / rsTotal;
+  const currRS = 1;
+  const projTotalRS = currRS + projRS;
+  const hireProb = Math.min(99, Math.round(projTotalRS * rsToHire * 100));
+
+  const need = Math.max(0, grand - currTotal);
+  const totalPW = pI + pO;
+  const wNeed = totalPW > 0 ? (need / totalPW) : 999;
+  const dNeed = Math.round(wNeed * 7);
+  const onTrack = need === 0 || dNeed <= dL;
+  const needPW = need > 0 && wL > 0 ? Math.ceil(need / wL) : 0;
+  const hColor = hireProb > 60 ? '#0F6E56' : hireProb > 30 ? '#BA7517' : '#E24B4A';
+
+  document.getElementById('fBox').innerHTML = `
+    <div class="ftitle">Прогноз · ${b.name}</div>
+    <div class="frow"><span class="fk">Потрібно кандидатів (конверсія 1:${grand})</span><span class="fv">${grand}</span></div>
+    <div class="frow"><span class="fk">Вже в базі</span><span class="fv">${currTotal}</span></div>
+    <div class="frow"><span class="fk">Ще потрібно залучити</span><span class="fv" style="color:${need>0?'#E24B4A':'#0F6E56'};">${need>0?need:'достатньо'}</span></div>
+    <div class="frow"><span class="fk">Нових за ${dL}д (in:${newI} + out:${newO})</span><span class="fv">${newI+newO}</span></div>
+    <div class="frow"><span class="fk">Прогноз нових RS за ${dL}д</span><span class="fv">+${projRS}</span></div>
+    <div class="frow"><span class="fk">Ймовірність hire до дедлайну</span><span class="fv" style="color:${hColor};">${hireProb}%</span></div>
+    <div class="frow"><span class="fk">Статус</span><span class="fv" style="color:${onTrack?'#0F6E56':'#E24B4A'};">${onTrack?'В рамках терміну':'Ризик не встигнути'}</span></div>`;
+
+  document.getElementById('fNote').textContent = onTrack
+    ? `При темпі ${pI} inbound + ${pO} outbound/тиж вакансія має закритись вчасно.`
+    : `Для дедлайну ${dL}д потрібно ~${needPW} кандидатів/тиж (зараз ${totalPW}).`;
+}
+
+function upVConv(key, val) {
+  const pct = Math.max(0, Math.min(100, parseInt(val)||0));
+  BASES[3][key].convPct = pct;
+  BASES[3][key].toRS = Math.round(pct / 100 * BASES[3][key].total);
+  renderFunnel(); upF();
+}
+
+function upV(key, sub, val) {
+  const v = Math.max(0, parseInt(val)||0);
+  BASES[3][key][sub] = v;
+  if(sub==='total') BASES[3][key].total = v;
+  renderFunnel(); upF();
+}
+function upVP(i, val) {
+  BASES[3].pipe[i].n = Math.max(0, parseInt(val)||0);
+  BASES[3].hired = BASES[3].pipe[BASES[3].pipe.length-1].n || 1;
+  renderFunnel(); upF();
+}
+
+renderFunnel();
+renderCurrent();
+upF();
+</script>
+</body>
+</html>
