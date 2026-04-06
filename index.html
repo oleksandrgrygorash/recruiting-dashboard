@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiting Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0ede8;color:#1a1a18;font-size:14px;}
+.page{max-width:1280px;margin:0 auto;padding:1.5rem;}
+h1{font-size:20px;font-weight:500;margin-bottom:2px;}
+.sub{font-size:12px;color:#6b6b67;margin-bottom:1.25rem;}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:.75rem 1rem;margin-bottom:1rem;}
+.controls label{font-size:12px;color:#6b6b67;}
+select{font-size:12px;padding:4px 8px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.2);background:#f5f5f3;color:#1a1a18;cursor:pointer;}
+.bgrp{display:flex;gap:3px;}
+.btn{font-size:12px;padding:4px 11px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.15);background:transparent;color:#6b6b67;cursor:pointer;transition:all .12s;}
+.btn:hover{background:#f5f5f3;color:#1a1a18;}
+.btn.on{background:#E6F1FB;color:#0C447C;border-color:#185FA5;}
+.btn.on-p{background:#EEEDFE;color:#3C3489;border-color:#534AB7;}
+.btn.on-g{background:#F1EFE8;color:#444441;border-color:#888780;}
+.btn.act{background:#dbeafe;color:#1e40af;border-color:#3b82f6;}
+.sep{width:1px;height:18px;background:rgba(0,0,0,0.1);}
+.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
+.mc{background:#f5f5f3;border-radius:8px;padding:.7rem .9rem;}
+.ml{font-size:11px;color:#6b6b67;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em;}
+.mv{font-size:24px;font-weight:500;color:#1a1a18;}
+.ms{font-size:11px;color:#9b9b96;}
+.mv.red{color:#E24B4A;} .mv.amb{color:#BA7517;}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:.75rem;}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#6b6b67;}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.ll{width:2px;height:10px;flex-shrink:0;}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1rem;margin-bottom:1rem;overflow:hidden;}
+.stitle{font-size:11px;font-weight:500;color:#9b9b96;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.sc{overflow-x:auto;}
+.ti{min-width:900px;}
+.tm{display:flex;margin-left:190px;border-bottom:0.5px solid rgba(0,0,0,0.08);}
+.tmo{font-size:10px;color:#9b9b96;text-align:center;padding:3px 1px;border-left:0.5px solid rgba(0,0,0,0.08);flex-shrink:0;}
+.tr{display:flex;align-items:center;border-top:0.5px solid rgba(0,0,0,0.07);min-height:33px;}
+.tl{width:190px;min-width:190px;padding:3px 8px 3px 0;}
+.tlt{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:183px;color:#1a1a18;}
+.tls{font-size:10px;color:#9b9b96;}
+.tg{flex:1;position:relative;height:33px;}
+.tdl{position:absolute;top:0;bottom:0;width:1.5px;background:#E24B4A;z-index:5;pointer-events:none;}
+.tb{position:absolute;top:5px;height:21px;border-radius:3px;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;cursor:default;transition:opacity .12s;}
+.tb:hover{opacity:.75;}
+.gh{padding:7px 0 2px;font-size:11px;font-weight:500;border-top:0.5px solid rgba(0,0,0,0.08);margin-top:4px;}
+.rr{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.ra{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.rn{font-size:13px;font-weight:500;min-width:150px;}
+.rbw{flex:1;height:6px;background:#f0ede8;border-radius:3px;overflow:hidden;}
+.rst{font-size:11px;color:#6b6b67;min-width:175px;text-align:right;}
+.tlwrap{position:relative;}
+.tooltip{position:absolute;background:#fff;border:0.5px solid rgba(0,0,0,0.2);border-radius:8px;padding:9px 12px;font-size:12px;pointer-events:none;z-index:200;display:none;max-width:260px;width:max-content;box-shadow:0 2px 12px rgba(0,0,0,0.1);}
+.tt-title{font-weight:500;font-size:13px;color:#1a1a18;margin-bottom:4px;}
+.tt-st{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;margin-bottom:5px;}
+.tt-row{display:flex;justify-content:space-between;gap:12px;color:#6b6b67;margin-top:2px;}
+.tt-val{color:#1a1a18;font-weight:500;}
+.tt-red{color:#E24B4A;font-weight:500;}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Recruiting Timeline Dashboard</h1>
+  <p class="sub">Ashby ATS + Hiring Plan 2026 · Target: 60 днів (Open) · Квітень 2026</p>
+
+  <div class="controls">
+    <label>Статус:</label>
+    <div class="bgrp">
+      <button class="btn on"   id="bO" onclick="tog('Open',this,'on')">Open</button>
+      <button class="btn on-p" id="bP" onclick="tog('Planned',this,'on-p')">Planned</button>
+      <button class="btn on-g" id="bH" onclick="tog('Hold',this,'on-g')">Hold</button>
+    </div>
+    <div class="sep"></div>
+    <label>Рекрутер:</label>
+    <select id="fRec" onchange="render()">
+      <option value="all">Всі</option>
+      <option value="Анастасія Коломієць">Анастасія</option>
+      <option value="Юлія Комар">Юлія</option>
+      <option value="Не призначено">Не призначено</option>
+    </select>
+    <div class="sep"></div>
+    <label>Команда:</label>
+    <select id="fTeam" onchange="render()"><option value="all">Всі</option></select>
+    <div class="sep"></div>
+    <label>Вигляд:</label>
+    <div class="bgrp">
+      <button class="btn act" id="vA" onclick="sv('all')">Всі</button>
+      <button class="btn" id="vR" onclick="sv('rec')">Рекрутери</button>
+      <button class="btn" id="vT" onclick="sv('team')">Команди</button>
+    </div>
+  </div>
+
+  <div class="metrics" id="mets"></div>
+
+  <div class="legend">
+    <div class="li"><div class="ld" style="background:#185FA5;border:1px solid #185FA5;"></div>Open · Анастасія</div>
+    <div class="li"><div class="ld" style="background:#0F6E56;border:1px solid #0F6E56;"></div>Open · Юлія</div>
+    <div class="li"><div class="ld" style="background:#534AB733;border:1px dashed #534AB7;"></div>Planned</div>
+    <div class="li"><div class="ld" style="background:#88878022;border:1px dashed #888780;"></div>Hold</div>
+    <div class="li"><div class="ld" style="background:#A32D2D;border:1px solid #A32D2D;"></div>Прострочено</div>
+    <div class="li"><div class="ll" style="background:#E24B4A;"></div>Сьогодні</div>
+  </div>
+
+  <div id="vAll">
+    <div class="card">
+      <div class="stitle">Таймлайн вакансій</div>
+      <div class="sc"><div class="ti" id="tlA"></div></div>
+    </div>
+  </div>
+  <div id="vRec" style="display:none;">
+    <div class="card"><div class="stitle">Навантаження рекрутерів</div><div id="rbars"></div></div>
+    <div class="card"><div class="stitle">Таймлайн по рекрутерам</div><div class="sc"><div class="ti" id="tlR"></div></div></div>
+  </div>
+  <div id="vTeam" style="display:none;">
+    <div class="card"><div class="stitle">Таймлайн по командах</div><div class="sc"><div class="ti" id="tlT"></div></div></div>
+  </div>
+</div>
+
+<script>
+const JOBS=[
+  {t:"Event Manager",s:"Open",tm:"Back Office",hm:"Halyna Buida",r:"Replacement",rec:"Анастасія Коломієць",o:"2025-08-18",tc:null},
+  {t:"Creative Motion Designer",s:"Open",tm:"Social Discovery",hm:"Roman Yatsentiuk",r:"Replacement",rec:"Анастасія Коломієць",o:"2026-01-22",tc:null},
+  {t:"Junior UI/UX Designer",s:"Open",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Юлія Комар",o:"2026-02-10",tc:null},
+  {t:"Senior Sales Executive",s:"Open",tm:"Support",hm:"Anna Matviienko",r:"New Hire",rec:"Анастасія Коломієць",o:"2026-02-10",tc:null},
+  {t:"Product Marketing Manager",s:"Open",tm:"R&D",hm:"Yuliia Masnyk",r:"New Hire",rec:"Юлія Комар",o:"2026-02-18",tc:null},
+  {t:"Middle Golang Developer",s:"Open",tm:"Tech Services",hm:"Andrii Filenko",r:"New Hire",rec:"Юлія Комар",o:"2026-02-23",tc:null},
+  {t:"Senior Product Manager",s:"Open",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Юлія Комар",o:"2026-02-27",tc:null},
+  {t:"Communications Specialist",s:"Open",tm:"Back Office",hm:"Anastasiia Luhova",r:"New Hire",rec:"Анастасія Коломієць",o:"2026-03-20",tc:null},
+  {t:"Product Analyst",s:"Open",tm:"Product Services",hm:"Kateryna Starovoitenko",r:"New Hire",rec:"Юлія Комар",o:"2026-03-26",tc:null},
+  {t:"User Acquisition Manager",s:"Open",tm:"Social Discovery",hm:"Daria Melnikova",r:"New Hire",rec:"Анастасія Коломієць",o:"2026-03-31",tc:null},
+  {t:"QA Engineer",s:"Open",tm:"Tech Services",hm:"Eugene Gaidai",r:"New Hire",rec:"Анастасія Коломієць",o:"2026-04-02",tc:null},
+  {t:"Golang Developer (Tech)",s:"Open",tm:"Tech Services",hm:"Andrii Filenko",r:"New Hire",rec:"Юлія Комар",o:"2026-02-23",tc:null},
+  {t:"Creative Marketing Specialist",s:"Open",tm:"Social Discovery",hm:"Roman Yatsentiuk",r:"Replacement",rec:"Анастасія Коломієць",o:"2026-03-01",tc:null},
+  {t:"Product Manager (Kismia)",s:"Open",tm:"Social Discovery",hm:"Yaroslav Malysh",r:"Replacement",rec:"Анастасія Коломієць",o:"2026-04-01",tc:null},
+  {t:"Creative Marketing Lead",s:"Open",tm:"R&D",hm:"Myroslava Linkova",r:"Replacement",rec:"Не призначено",o:"2026-02-01",tc:null},
+  {t:"UAM (User Acquisition)",s:"Planned",tm:"Social Discovery",hm:"Oleh Solonets",r:"New Hire",rec:"Не призначено",o:"2026-03-01",tc:"2026-05-01"},
+  {t:"QA (Inloved Group)",s:"Planned",tm:"Social Discovery",hm:"Liliia Khomaziuk",r:"New Hire",rec:"Не призначено",o:"2026-07-01",tc:"2026-09-01"},
+  {t:"Android Developer",s:"Planned",tm:"Social Discovery",hm:"Liliia Khomaziuk",r:"New Hire",rec:"Не призначено",o:"2026-01-01",tc:"2026-03-01"},
+  {t:"Backend Developer",s:"Planned",tm:"Social Discovery",hm:"Andrii Kozachok",r:"Replacement",rec:"Не призначено",o:"2025-12-01",tc:"2026-02-01"},
+  {t:"Data Analyst (Marketing)",s:"Planned",tm:"Social Discovery",hm:"Vitalii Shutka",r:"New Hire",rec:"Не призначено",o:"2025-12-01",tc:"2026-02-01"},
+  {t:"UAM #2",s:"Planned",tm:"Social Discovery",hm:"Oleh Solonets",r:"New Hire",rec:"Не призначено",o:"2026-09-01",tc:"2026-11-01"},
+  {t:"AdOps",s:"Planned",tm:"Social Discovery",hm:"Andrii Kozachok",r:"New Hire",rec:"Не призначено",o:"2025-12-01",tc:"2026-02-01"},
+  {t:"Motion Designer",s:"Planned",tm:"Social Discovery",hm:"Roman Yatsentiuk",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Static Designer",s:"Planned",tm:"Social Discovery",hm:"Roman Yatsentiuk",r:"New Hire",rec:"Не призначено",o:"2026-02-01",tc:"2026-04-01"},
+  {t:"Creative Mktg Specialist #2",s:"Planned",tm:"Social Discovery",hm:"Roman Yatsentiuk",r:"New Hire",rec:"Не призначено",o:"2026-05-01",tc:"2026-07-01"},
+  {t:"Backend Developer #2",s:"Planned",tm:"Social Discovery",hm:"Andrii Kozachok",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"SDR",s:"Planned",tm:"Support",hm:"Anna Matviienko",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Data Analyst (Affemity)",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2025-11-01",tc:"2026-01-01"},
+  {t:"Front End Engineer",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2025-12-01",tc:"2026-02-01"},
+  {t:"Product Mktg Manager #2",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2026-03-01",tc:"2026-05-01"},
+  {t:"Project Manager",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2026-03-01",tc:"2026-05-01"},
+  {t:"Product Manager (Affemity)",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Content Lead",s:"Planned",tm:"R&D",hm:"Julia Nefodova",r:"New Hire",rec:"Не призначено",o:"2026-07-01",tc:"2026-09-01"},
+  {t:"Coach #1",s:"Planned",tm:"R&D",hm:"Kateryna Chernyk",r:"New Hire",rec:"Не призначено",o:"2025-11-01",tc:"2026-01-01"},
+  {t:"Coach #2",s:"Planned",tm:"R&D",hm:"Kateryna Chernyk",r:"New Hire",rec:"Не призначено",o:"2025-11-01",tc:"2026-01-01"},
+  {t:"Coach #3",s:"Planned",tm:"R&D",hm:"Kateryna Chernyk",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Coach #4",s:"Planned",tm:"R&D",hm:"Kateryna Chernyk",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Product Analyst (Planned)",s:"Planned",tm:"Product Services",hm:"Oleksii Kulenich",r:"New Hire",rec:"Не призначено",o:"2026-03-01",tc:"2026-05-01"},
+  {t:"PHP Developer",s:"Planned",tm:"Product Services",hm:"Pavlo Tokar",r:"Replacement",rec:"Не призначено",o:"2026-01-01",tc:"2026-03-01"},
+  {t:"Golang Developer (Payment)",s:"Planned",tm:"Product Services",hm:"Nataliia Yatsun",r:"New Hire",rec:"Не призначено",o:"2026-01-01",tc:"2026-03-01"},
+  {t:"Golang Developer (R&D)",s:"Planned",tm:"R&D",hm:"Myroslava Linkova",r:"New Hire",rec:"Не призначено",o:"2026-05-01",tc:"2026-07-01"},
+  {t:"UAM (R&D)",s:"Planned",tm:"R&D",hm:"Myroslava Linkova",r:"New Hire",rec:"Не призначено",o:"2026-06-01",tc:"2026-08-01"},
+  {t:"Creative Designer",s:"Planned",tm:"R&D",hm:"Andriy Griy",r:"New Hire",rec:"Не призначено",o:"2026-06-01",tc:"2026-08-01"},
+  {t:"Developer (AI Platform)",s:"Planned",tm:"Tech Services",hm:"Oleksii Avilov",r:"New Hire",rec:"Не призначено",o:"2026-03-01",tc:"2026-05-01"},
+  {t:"Financial Controller",s:"Planned",tm:"Back Office",hm:"Olena Yahusechko",r:"New Hire",rec:"Не призначено",o:"2025-12-01",tc:"2026-02-01"},
+  {t:"L&D Specialist",s:"Planned",tm:"Back Office",hm:"Yevheniia Miroshnychenko",r:"New Hire",rec:"Не призначено",o:"2026-05-01",tc:"2026-07-01"},
+  {t:"QA Engineer Lead",s:"Planned",tm:"Tech Services",hm:"Yevhen Haidai",r:"New Hire",rec:"Не призначено",o:"2026-04-01",tc:"2026-06-01"},
+  {t:"Front End Engineer (Senior)",s:"Hold",tm:"R&D",hm:"Olena Lavronenko",r:"New Hire",rec:"Не призначено",o:"2026-01-01",tc:"2026-03-01"},
+];
+
+const TD=60,TODAY=new Date();TODAY.setHours(0,0,0,0);
+const RC={"Анастасія Коломієць":{b:"#185FA5",l:"#B5D4F4",d:"#0C447C"},"Юлія Комар":{b:"#0F6E56",l:"#9FE1CB",d:"#085041"},"Не призначено":{b:"#888780",l:"#D3D1C7",d:"#444441"}};
+const TCOLS=["#185FA5","#0F6E56","#BA7517","#534AB7","#A32D2D","#854F0B","#0F6E56"];
+const TEAMS=[...new Set(JOBS.map(j=>j.tm))].sort();
+const ts=document.getElementById('fTeam');
+TEAMS.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;ts.appendChild(o);});
+
+function ad(d,n){let r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function db(a,b){return Math.round((b-a)/864e5);}
+function fmt(d){return d.toLocaleDateString('uk-UA',{day:'2-digit',month:'short',year:'numeric'});}
+
+const EJ=JOBS.map(j=>{
+  const op=new Date(j.o);
+  const tg=j.tc?new Date(j.tc):ad(op,TD);
+  const dO=db(op,TODAY);
+  const ov=j.s==="Open"&&TODAY>tg;
+  return{...j,op,tg,dO,ov};
+});
+
+let AS=new Set(["Open","Planned","Hold"]),CV="all";
+
+function tog(s,btn,cls){
+  if(AS.has(s)){if(AS.size===1)return;AS.delete(s);btn.className='btn';}
+  else{AS.add(s);btn.className='btn '+cls;}
+  render();
+}
+function sv(v){
+  CV=v;
+  ["vAll","vRec","vTeam"].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById(v==="all"?"vAll":v==="rec"?"vRec":"vTeam").style.display='';
+  ["vA","vR","vT"].forEach(id=>document.getElementById(id).classList.remove('act'));
+  document.getElementById(v==="all"?"vA":v==="rec"?"vR":"vT").classList.add('act');
+  render();
+}
+function gf(){
+  const rc=document.getElementById('fRec').value;
+  const tm=document.getElementById('fTeam').value;
+  return EJ.filter(j=>AS.has(j.s)&&(rc==='all'||j.rec===rc)&&(tm==='all'||j.tm===tm));
+}
+function render(){
+  const js=gf();
+  const op=js.filter(j=>j.s==='Open').length;
+  const pl=js.filter(j=>j.s==='Planned').length;
+  const ho=js.filter(j=>j.s==='Hold').length;
+  const ov=js.filter(j=>j.ov).length;
+  document.getElementById('mets').innerHTML=`
+    <div class="mc"><div class="ml">Open</div><div class="mv">${op}</div><div class="ms">зараз в роботі</div></div>
+    <div class="mc"><div class="ml">Planned</div><div class="mv amb">${pl}</div><div class="ms">за планом</div></div>
+    <div class="mc"><div class="ml">Hold</div><div class="mv" style="color:#888780">${ho}</div><div class="ms">на паузі</div></div>
+    <div class="mc"><div class="ml">Прострочено</div><div class="mv red">${ov}</div><div class="ms">&gt;60 днів</div></div>
+    <div class="mc"><div class="ml">Всього</div><div class="mv">${js.length}</div><div class="ms">відображається</div></div>`;
+  if(CV==="all")bTL(js,'tlA',null);
+  else if(CV==="rec"){bRB(js);bTL(js,'tlR','rec');}
+  else bTL(js,'tlT','team');
+}
+
+function bTL(jobs,cid,grp){
+  const el=document.getElementById(cid);
+  if(!jobs.length){el.innerHTML='<p style="padding:1rem;font-size:12px;color:#9b9b96;">Немає вакансій</p>';return;}
+  const recOrder={"Юлія Комар":0,"Анастасія Коломієць":1,"Не призначено":2};
+  const srt=[...jobs].sort((a,b)=>{
+    if(a.s==='Open'&&b.s!=='Open') return -1;
+    if(a.s!=='Open'&&b.s==='Open') return 1;
+    const ro=(recOrder[a.rec]??9)-(recOrder[b.rec]??9);
+    if(ro!==0) return ro;
+    return a.op-b.op;
+  });
+  const allD=srt.flatMap(j=>[j.op,j.tg]);
+  let mn=new Date(Math.min(...allD.map(d=>d.getTime())));
+  let mx=new Date(Math.max(...allD.map(d=>d.getTime())));
+  mn=new Date(mn.getFullYear(),mn.getMonth(),1);
+  mx=new Date(mx.getFullYear(),mx.getMonth()+2,1);
+  const tot=db(mn,mx);
+  const pct=d=>Math.max(0,Math.min(100,db(mn,d)/tot*100));
+  let ms=[],c=new Date(mn);
+  while(c<mx){ms.push(new Date(c));c.setMonth(c.getMonth()+1);}
+  const mH=ms.map(m=>{const s=pct(m),nx=new Date(m);nx.setMonth(nx.getMonth()+1);return`<div class="tmo" style="width:${pct(nx)-s}%;">${m.toLocaleDateString('uk-UA',{month:'short',year:'2-digit'})}</div>`;}).join('');
+  const tp=pct(TODAY);
+  let rows='';
+  if(!grp){
+    srt.forEach(j=>{rows+=bR(j,pct,tp,null);});
+  } else {
+    const gmap={},keys=[];
+    const gkey=j=>grp==='rec'?j.rec:j.tm;
+    srt.forEach(j=>{const k=gkey(j);if(!gmap[k]){keys.push(k);gmap[k]=[];}gmap[k].push(j);});
+    [...new Set(keys)].forEach((k,ki)=>{
+      const col=grp==='rec'?(RC[k]||RC['Не призначено']).b:TCOLS[ki%TCOLS.length];
+      rows+=`<div class="gh" style="color:${col};">${k} <span style="font-size:10px;font-weight:400;color:#9b9b96;">${gmap[k].length} вак.</span></div>`;
+      gmap[k].forEach(j=>{rows+=bR(j,pct,tp,grp==='team'?col:null);});
+    });
+  }
+  el.innerHTML=`<div class="tlwrap"><div class="tm">${mH}</div>${rows}</div>`;
+  el.querySelectorAll('.tb').forEach(b=>{
+    b.addEventListener('mouseenter',e=>showTT(e,el));
+    b.addEventListener('mouseleave',()=>{el.querySelector('.tooltip')&&(el.querySelector('.tooltip').style.display='none');});
+    b.addEventListener('mousemove',e=>moveTT(e,el));
+  });
+  if(!el.querySelector('.tooltip')){
+    const tt=document.createElement('div');tt.className='tooltip';
+    tt.innerHTML=`<div class="tt-title" id="${cid}-ttt"></div><div><span class="tt-st" id="${cid}-tst"></span></div><div class="tt-row"><span>Відкрита/план</span><span class="tt-val" id="${cid}-to"></span></div><div class="tt-row"><span>Target</span><span id="${cid}-tc2"></span></div><div class="tt-row"><span>Команда</span><span class="tt-val" id="${cid}-ttm"></span></div><div class="tt-row"><span>Рекрутер</span><span class="tt-val" id="${cid}-trc"></span></div><div class="tt-row"><span>HM</span><span class="tt-val" id="${cid}-thm"></span></div><div class="tt-row" id="${cid}-tdr"><span>Днів відкрита</span><span class="tt-val" id="${cid}-td"></span></div>`;
+    el.querySelector('.tlwrap').appendChild(tt);
+  }
+}
+
+function bR(j,pct,tp,oc){
+  let bc,fs;
+  const rc=RC[j.rec]||RC['Не призначено'];
+  if(j.s==='Open'){bc=oc||(j.ov?'#A32D2D':rc.b);fs=`background:${bc}28;border:1px solid ${bc};`;}
+  else if(j.s==='Planned'){bc=oc||'#534AB7';fs=`background:${bc}18;border:1px dashed ${bc};`;}
+  else{bc='#888780';fs='background:#88878015;border:1px dashed #888780;';}
+  const l=pct(j.op),r=pct(j.tg),w=Math.max(r-l,0.3);
+  const lbl=j.s==='Open'?`${Math.max(0,j.dO)}д`:'';
+  return`<div class="tr"><div class="tl"><div class="tlt" title="${j.t}">${j.t}</div><div class="tls">${j.tm}</div></div><div class="tg"><div class="tdl" style="left:${tp}%;"></div><div class="tb" style="left:${l}%;width:${w}%;${fs}" data-t="${e(j.t)}" data-s="${j.s}" data-o="${fmt(j.op)}" data-c="${fmt(j.tg)}" data-tm="${e(j.tm)}" data-rc="${e(j.rec)}" data-hm="${e(j.hm)}" data-r="${j.r}" data-d="${Math.max(0,j.dO)}" data-ov="${j.ov}"><span style="color:${bc};font-size:10px;">${lbl}</span></div></div></div>`;
+}
+
+function showTT(ev,el){
+  const d=ev.currentTarget.dataset,cid=el.id,tt=el.querySelector('.tooltip');
+  if(!tt)return;
+  el.querySelector(`#${cid}-ttt`).textContent=d.t;
+  const st=el.querySelector(`#${cid}-tst`);
+  st.textContent=d.s;
+  st.style.background=d.s==='Open'?'#E6F1FB':d.s==='Planned'?'#EEEDFE':'#F1EFE8';
+  st.style.color=d.s==='Open'?'#0C447C':d.s==='Planned'?'#3C3489':'#444441';
+  el.querySelector(`#${cid}-to`).textContent=d.o;
+  const tc=el.querySelector(`#${cid}-tc2`);
+  tc.textContent=d.c+(d.ov==='true'?' — прострочено':'');
+  tc.className=d.ov==='true'?'tt-red':'tt-val';
+  el.querySelector(`#${cid}-ttm`).textContent=d.tm;
+  el.querySelector(`#${cid}-trc`).textContent=d.rc;
+  el.querySelector(`#${cid}-thm`).textContent=d.hm;
+  el.querySelector(`#${cid}-tdr`).style.display=d.s==='Open'?'flex':'none';
+  el.querySelector(`#${cid}-td`).textContent=d.d+' дн.';
+  tt.style.display='block';
+  moveTT(ev,el);
+}
+function moveTT(ev,el){
+  const tt=el.querySelector('.tooltip');if(!tt)return;
+  const wr=el.querySelector('.tlwrap').getBoundingClientRect();
+  tt.style.left=(ev.clientX-wr.left+12)+'px';
+  tt.style.top=(ev.clientY-wr.top-10)+'px';
+}
+function bRB(jobs){
+  const m={};
+  jobs.forEach(j=>{if(!m[j.rec])m[j.rec]={op:0,pl:0,ho:0,days:0,oc:0};m[j.rec][j.s==='Open'?'op':j.s==='Planned'?'pl':'ho']++;if(j.s==='Open'){m[j.rec].days+=Math.max(0,j.dO);m[j.rec].oc++;}});
+  const mx=Math.max(...Object.values(m).map(v=>v.op+v.pl+v.ho),1);
+  let h='';
+  Object.entries(m).sort((a,b)=>(b[1].op+b[1].pl)-(a[1].op+a[1].pl)).forEach(([rec,v])=>{
+    const c=RC[rec]||RC['Не призначено'];
+    const ini=rec.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const avg=v.oc?Math.round(v.days/v.oc):0;
+    h+=`<div class="rr"><div class="ra" style="background:${c.l};color:${c.d};">${ini}</div><div class="rn">${rec}</div><div class="rbw"><div style="height:100%;display:flex;"><div style="width:${v.op/mx*100}%;background:${c.b};border-radius:3px 0 0 3px;"></div><div style="width:${v.pl/mx*100}%;background:#534AB7;opacity:.5;"></div><div style="width:${v.ho/mx*100}%;background:#888780;opacity:.4;border-radius:0 3px 3px 0;"></div></div></div><div class="rst">${v.op} open · ${v.pl} planned${v.ho?` · ${v.ho} hold`:''} · сер.${avg}д</div></div>`;
+  });
+  document.getElementById('rbars').innerHTML=h;
+}
+function e(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+render();
+</script>
+</body>
+</html>
