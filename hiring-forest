@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hiring Forecast</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0ede8;color:#1a1a18;font-size:14px;padding:1.5rem;}
+h2{font-size:18px;font-weight:500;margin-bottom:2px;}
+.sub{font-size:12px;color:#6b6b67;margin-bottom:1.25rem;}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,.1);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.ctitle{font-size:11px;font-weight:500;color:#9b9b96;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+
+.pri-bar{display:flex;align-items:center;gap:10px;background:#fff;border:0.5px solid rgba(0,0,0,.1);border-radius:12px;padding:.75rem 1.25rem;margin-bottom:1rem;flex-wrap:wrap;}
+.pri-bar label{font-size:12px;color:#6b6b67;font-weight:500;}
+.pri-btn{padding:6px 20px;border-radius:8px;border:0.5px solid rgba(0,0,0,.15);background:transparent;font-size:13px;font-weight:500;cursor:pointer;}
+.pri-btn:hover{background:#f5f5f3;}
+.pri-btn.low.act{background:#EAF3DE;color:#27500A;border-color:#3B6D11;}
+.pri-btn.med.act{background:#FFF9E6;color:#633806;border-color:#BA7517;}
+.pri-btn.high.act{background:#FCEBEB;color:#791F1F;border-color:#E24B4A;}
+.pri-meta{margin-left:auto;display:flex;gap:20px;}
+.pm{text-align:center;}
+.pm-val{font-size:18px;font-weight:500;}
+.pm-lbl{font-size:10px;color:#9b9b96;}
+
+.streams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.stream{border-radius:10px;padding:12px 14px;}
+.s-in{background:#E6F1FB;border:1px solid #185FA550;}
+.s-out{background:#E1F5EE;border:1px solid #0F6E5650;}
+.s-title{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+.s-flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.s-node{text-align:center;}
+.s-lbl{font-size:10px;font-weight:500;margin-bottom:2px;}
+.s-val{font-size:22px;font-weight:500;line-height:1;}
+.s-sub{font-size:9px;margin-top:2px;}
+.s-arr{font-size:18px;color:#9b9b96;}
+.merge-row{display:flex;align-items:center;gap:8px;margin:8px 0;}
+.ml{flex:1;height:1px;background:linear-gradient(to right,#185FA5,#aaa);}
+.mr{flex:1;height:1px;background:linear-gradient(to left,#0F6E56,#aaa);}
+.mpill{padding:4px 14px;background:#f5f5f3;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;font-size:11px;color:#6b6b67;white-space:nowrap;}
+
+.hfunnel{display:flex;align-items:center;overflow-x:auto;padding:4px 0;}
+.hnode{flex-shrink:0;}
+.hbox{border-radius:10px;padding:10px 12px;text-align:center;min-width:100px;}
+.hlbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+.hval{font-size:24px;font-weight:500;line-height:1;}
+.hsub{font-size:10px;margin-top:3px;}
+.hkpi{font-size:9px;margin-top:4px;padding:2px 6px;border-radius:10px;font-weight:500;}
+.harrow{display:flex;flex-direction:column;align-items:center;padding:0 3px;flex-shrink:0;margin-top:-18px;}
+.hpct{font-size:10px;font-weight:500;margin-bottom:3px;white-space:nowrap;}
+.hline{display:flex;align-items:center;}
+.hdash{height:2px;width:26px;background:#D3D1C7;}
+.htip{font-size:13px;color:#D3D1C7;margin-left:-3px;}
+.pct-tag{font-size:9px;font-weight:500;margin-top:4px;}
+
+.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;}
+.slider-item{background:#f5f5f3;border-radius:8px;padding:8px 10px;}
+.slider-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;}
+.slider-lbl{font-size:11px;font-weight:500;}
+.slider-val{font-size:14px;font-weight:500;}
+.slider-foot{display:flex;justify-content:space-between;font-size:9px;color:#9b9b96;margin-top:2px;}
+
+.kpi-tbl{width:100%;border-collapse:collapse;}
+.kpi-tbl th{font-size:10px;font-weight:500;color:#9b9b96;text-transform:uppercase;padding:4px 8px;border-bottom:0.5px solid rgba(0,0,0,.1);text-align:left;}
+.kpi-tbl td{padding:8px;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px;vertical-align:middle;}
+.kpi-tbl tr:last-child td{border:none;}
+.kn{font-size:16px;font-weight:500;text-align:center;}
+.fi{width:52px;font-size:12px;padding:3px 6px;border:0.5px solid rgba(0,0,0,.2);border-radius:6px;background:#f5f5f3;text-align:center;}
+.badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:10px;display:inline-block;}
+.bok{background:#EAF3DE;color:#27500A;}.bwarn{background:#FFF9E6;color:#633806;}
+.bbad{background:#FCEBEB;color:#791F1F;}.bna{background:#F1EFE8;color:#888780;}
+
+.pill-row{display:flex;gap:8px;margin-bottom:12px;}
+.pill{background:#f5f5f3;border-radius:8px;padding:6px 10px;text-align:center;flex:1;}
+.pv{font-size:18px;font-weight:500;}.pl{font-size:10px;color:#9b9b96;}
+.prog-row{margin-bottom:8px;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:11px;color:#6b6b67;margin-bottom:3px;}
+.prog-wrap{height:8px;background:#f0ede8;border-radius:4px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:4px;}
+
+.sig{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;border-radius:8px;margin-bottom:6px;font-size:12px;line-height:1.5;}
+.s-ok{background:#EAF3DE;border:1px solid #3B6D1150;}
+.s-warn{background:#FFF9E6;border:1px solid #BA751750;}
+.s-bad{background:#FCEBEB;border:1px solid #E24B4A50;}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.dok{background:#3B6D11;}.dwarn{background:#BA7517;}.dbad{background:#E24B4A;}
+.sig-body{flex:1;}
+.sig-ttl{font-weight:500;margin-bottom:2px;}
+.sig-det{font-size:11px;opacity:.85;margin-top:2px;}
+.adv-hdr{font-size:11px;font-weight:500;color:#534AB7;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px;padding-top:14px;border-top:0.5px solid rgba(0,0,0,.08);}
+</style>
+</head>
+<body>
+
+<h2>Product Analyst — Hiring Forecast</h2>
+<p class="sub">База: закрита #38 · Поточна: #149 (відкрита 26 берез. 2026, 14 днів) · Рекрутер: Юлія Комар · HM: Kateryna Starovoitenko</p>
+
+<div class="pri-bar">
+  <label>Пріоритет:</label>
+  <button class="pri-btn low" onclick="setPri('low',this)">Low</button>
+  <button class="pri-btn med act" onclick="setPri('med',this)">Medium</button>
+  <button class="pri-btn high" onclick="setPri('high',this)">High</button>
+  <div class="pri-meta" id="priMeta"></div>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="ctitle" style="margin:0;">Факт воронки #38 — закрита (база)</div>
+    <div style="font-size:11px;color:#9b9b96;">31 кандидат · Hired: 1 · Passthrough Rate + Pipeline</div>
+  </div>
+  <div class="streams">
+    <div class="stream s-in">
+      <div class="s-title" style="color:#0C447C;">Inbound потік (26)</div>
+      <div class="s-flow">
+        <div class="s-node">
+          <div class="s-lbl" style="color:#185FA5;">App Review</div>
+          <div class="s-val" style="color:#185FA5;">26</div>
+          <div class="s-sub" style="color:#6b6b67;">inbound кандидатів</div>
+        </div>
+        <div class="s-arr">→</div>
+        <div style="font-size:11px;line-height:1.9;">
+          <div style="color:#0F6E56;">→ RS: <b>11</b> (42%)</div>
+          <div style="color:#E24B4A;">✕ archived: ~14</div>
+          <div style="font-size:9px;color:#9b9b96;">решта в CV Review/інших</div>
+        </div>
+      </div>
+    </div>
+    <div class="stream s-out">
+      <div class="s-title" style="color:#085041;">Outbound потік (5)</div>
+      <div style="font-size:11px;line-height:1.9;color:#6b6b67;">
+        <div>New Lead: <b style="color:#0F6E56;">2</b></div>
+        <div>CV Review (прямо): <b style="color:#0F6E56;">1</b></div>
+        <div>Offer (прямо): <b style="color:#0F6E56;">1</b></div>
+        <div>Test Sent (прямо): <b style="color:#0F6E56;">1</b></div>
+        <div style="font-size:9px;color:#9b9b96;margin-top:4px;">нестандартні входи — рекрутер вніс вручну</div>
+      </div>
+    </div>
+  </div>
+  <div class="merge-row">
+    <div class="ml"></div>
+    <div class="mpill">злиття · Passthrough Rate (джерело істини)</div>
+    <div class="mr"></div>
+  </div>
+  <div class="hfunnel">
+    <div class="hnode"><div class="hbox" style="background:#EEEDFE;border:1px solid #534AB780;">
+      <div class="hlbl" style="color:#534AB7;">RS</div>
+      <div class="hval" style="color:#534AB7;">11</div>
+      <div class="hsub" style="color:#534AB7;">з 31 (35%)</div>
+    </div></div>
+    <div class="harrow"><div class="hpct" style="color:#888;">100%</div><div class="hline"><div class="hdash"></div><div class="htip">▶</div></div></div>
+    <div class="hnode"><div class="hbox" style="background:#E1F5EE;border:1px solid #0F6E5680;">
+      <div class="hlbl" style="color:#0F6E56;">CV Review</div>
+      <div class="hval" style="color:#0F6E56;">11</div>
+      <div class="hsub" style="color:#0F6E56;">з 11 (100%)</div>
+    </div></div>
+    <div class="harrow"><div class="hpct" style="color:#E24B4A;">18%</div><div class="hline"><div class="hdash"></div><div class="htip">▶</div></div></div>
+    <div class="hnode"><div class="hbox" style="background:#FFF9E6;border:1px solid #BA751780;">
+      <div class="hlbl" style="color:#BA7517;">Tech Interview</div>
+      <div class="hval" style="color:#BA7517;">2</div>
+      <div class="hsub" style="color:#BA7517;">з 11 (18%)</div>
+    </div></div>
+    <div class="harrow"><div class="hpct" style="color:#0F6E56;">50%</div><div class="hline"><div class="hdash"></div><div class="htip">▶</div></div></div>
+    <div class="hnode"><div class="hbox" style="background:#F1EFE8;border:1px solid #88878080;">
+      <div class="hlbl" style="color:#888780;">Test → Final</div>
+      <div class="hval" style="color:#888780;">1</div>
+      <div class="hsub" style="color:#888780;">100% → 100%</div>
+    </div></div>
+    <div class="harrow"><div class="hpct" style="color:#0F6E56;">100%</div><div class="hline"><div class="hdash"></div><div class="htip">▶</div></div></div>
+    <div class="hnode"><div class="hbox" style="background:#EAF3DE;border:1px solid #3B6D1180;">
+      <div class="hlbl" style="color:#27500A;">Hired</div>
+      <div class="hval" style="color:#27500A;">1</div>
+      <div class="hsub" style="color:#27500A;">з 31 (3.2%)</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctitle">Конверсії воронки — підкрути для планування таргету</div>
+  <div class="slider-grid">
+    <div class="slider-item">
+      <div class="slider-head">
+        <span class="slider-lbl">App Review → RS</span>
+        <span class="slider-val" id="sv-appToRS" style="color:#BA7517;">35%</span>
+      </div>
+      <input type="range" min="5" max="80" step="1" value="35" style="width:100%;accent-color:#185FA5;"
+        oninput="document.getElementById('sv-appToRS').textContent=this.value+'%';setConv('appToRS',+this.value)">
+      <div class="slider-foot"><span>база #38: 35%</span><span>бенчмарк: 20–40%</span></div>
+    </div>
+    <div class="slider-item">
+      <div class="slider-head">
+        <span class="slider-lbl">Outbound → RS</span>
+        <span class="slider-val" id="sv-obToRS" style="color:#BA7517;">28%</span>
+      </div>
+      <input type="range" min="5" max="80" step="1" value="28" style="width:100%;accent-color:#185FA5;"
+        oninput="document.getElementById('sv-obToRS').textContent=this.value+'%';setConv('obToRS',+this.value)">
+      <div class="slider-foot"><span>база QA: 28%</span><span>бенчмарк: 25–35%</span></div>
+    </div>
+    <div class="slider-item">
+      <div class="slider-head">
+        <span class="slider-lbl">RS → CV Review</span>
+        <span class="slider-val" id="sv-rsToCV" style="color:#0F6E56;">100%</span>
+      </div>
+      <input type="range" min="30" max="100" step="1" value="100" style="width:100%;accent-color:#185FA5;"
+        oninput="document.getElementById('sv-rsToCV').textContent=this.value+'%';setConv('rsToCV',+this.value)">
+      <div class="slider-foot"><span>база #38: 100%</span><span>бенчмарк: —</span></div>
+    </div>
+    <div class="slider-item">
+      <div class="slider-head">
+        <span class="slider-lbl">CV Review → TI</span>
+        <span class="slider-val" id="sv-cvToTI" style="color:#E24B4A;">18%</span>
+      </div>
+      <input type="range" min="5" max="70" step="1" value="18" style="width:100%;accent-color:#185FA5;"
+        oninput="document.getElementById('sv-cvToTI').textContent=this.value+'%';setConv('cvToTI',+this.value)">
+      <div class="slider-foot"><span>база #38: 18%</span><span>бенчмарк: 30–50%</span></div>
+    </div>
+    <div class="slider-item">
+      <div class="slider-head">
+        <span class="slider-lbl">TI → Hired</span>
+        <span class="slider-val" id="sv-tiToHire" style="color:#BA7517;">10%</span>
+      </div>
+      <input type="range" min="5" max="80" step="1" value="10" style="width:100%;accent-color:#185FA5;"
+        oninput="document.getElementById('sv-tiToHire').textContent=this.value+'%';setConv('tiToHire',+this.value)">
+      <div class="slider-foot"><span>бенчмарк: 10%</span><span>факт #38: 50%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="ctitle" style="margin:0;">Таргет воронка / тиждень</div>
+    <div style="font-size:11px;color:#9b9b96;">перераховується зі слайдерів вище</div>
+  </div>
+  <div class="hfunnel" id="targetFunnel"></div>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="ctitle" style="margin:0;">Факт воронки #149 — за 14 днів (2 тижні)</div>
+  </div>
+  <div class="streams">
+    <div class="stream s-in">
+      <div class="s-title" style="color:#0C447C;">Inbound потік</div>
+      <div class="s-flow">
+        <div class="s-node">
+          <div class="s-lbl" style="color:#185FA5;">App Review</div>
+          <div class="s-val" style="color:#185FA5;">11</div>
+          <div class="s-sub" style="color:#6b6b67;">всього inbound</div>
+          <div class="pct-tag" id="inPct149"></div>
+        </div>
+        <div class="s-arr">→</div>
+        <div style="font-size:11px;line-height:1.8;">
+          <div style="color:#185FA5;">● 8 активних в AR</div>
+          <div style="color:#E24B4A;">✕ 3 archived</div>
+          <div style="font-size:9px;color:#9b9b96;margin-top:3px;">конверсія App→RS:<br>35% (таргет з #38)</div>
+        </div>
+      </div>
+    </div>
+    <div class="stream s-out">
+      <div class="s-title" style="color:#085041;">Outbound потік</div>
+      <div class="s-flow">
+        <div class="s-node">
+          <div class="s-lbl" style="color:#0F6E56;">New Lead</div>
+          <div class="s-val" style="color:#0F6E56;">12</div>
+          <div class="s-sub" style="color:#6b6b67;">5 активних</div>
+        </div>
+        <div class="s-arr">→</div>
+        <div class="s-node">
+          <div class="s-lbl" style="color:#0F6E56;">Reached Out</div>
+          <div class="s-val" style="color:#0F6E56;">7</div>
+          <div class="s-sub" style="color:#6b6b67;">6 активних</div>
+        </div>
+        <div class="s-arr">→</div>
+        <div style="font-size:11px;line-height:1.8;">
+          <div style="color:#0F6E56;">✓ 1 Replied</div>
+          <div style="color:#E24B4A;">✕ 1 archived</div>
+          <div style="font-size:9px;color:#9b9b96;margin-top:3px;">Replied → RS напряму<br>(минає App Review)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="merge-row">
+    <div class="ml"></div>
+    <div class="mpill">злиття на Recruitment Screening</div>
+    <div class="mr"></div>
+  </div>
+  <div class="hfunnel" id="factFunnel149"></div>
+</div>
+
+<div class="card">
+  <div class="ctitle">KPI по відповідальних — факт цього тижня</div>
+  <table class="kpi-tbl">
+    <thead><tr>
+      <th>Хто</th><th>KPI / тиждень</th><th>Метрика</th><th>Факт</th><th>Статус</th>
+    </tr></thead>
+    <tbody id="kpiBody"></tbody>
+  </table>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="ctitle">Поточний стан #149</div>
+    <div class="pill-row">
+      <div class="pill"><div class="pv" style="color:#185FA5;">11</div><div class="pl">Inbound</div></div>
+      <div class="pill"><div class="pv" style="color:#0F6E56;">12</div><div class="pl">Outbound</div></div>
+      <div class="pill"><div class="pv">23</div><div class="pl">Всього</div></div>
+      <div class="pill"><div class="pv" style="color:#E24B4A;">4</div><div class="pl">Archived</div></div>
+    </div>
+    <div id="currProg"></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">Прогноз закриття</div>
+    <div id="closeForecast"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctitle">Сигнали</div>
+  <div id="signals"></div>
+  <div class="adv-hdr">Поради по конверсіях</div>
+  <div id="advice"></div>
+</div>
+
+<script>
+let CV = {appToRS:0.35, rsToCV:1.00, cvToTI:0.18, tiToHire:0.10, obToRS:0.28, obLeads:0};
+
+const PRI = {
+  low:  {ti:1, color:'#3B6D11', bg:'#EAF3DE'},
+  med:  {ti:2, color:'#BA7517', bg:'#FFF9E6'},
+  high: {ti:3, color:'#E24B4A', bg:'#FCEBEB'},
+};
+
+const openedAt = new Date('2026-03-26');
+const today    = new Date('2026-04-09');
+const deadline = new Date(openedAt.getTime() + 60*864e5);
+const daysLeft  = Math.max(0, Math.round((deadline - today)/864e5));
+const weeksLeft = daysLeft / 7;
+const weeksOpen = 2;
+
+let curPri = 'med';
+let facts = {comms:0, rs:0, ti:0};
+
+function calc(ti) {
+  const cv  = +(ti / CV.cvToTI).toFixed(1);
+  const rs  = +(cv / CV.rsToCV).toFixed(1);
+  const app = Math.ceil(rs / CV.appToRS);
+  const wH  = +(1 / (ti * CV.tiToHire)).toFixed(1);
+  return {ti, cv, rs, app, wH, dH: Math.round(wH*7)};
+}
+
+function setConv(key, val) { CV[key] = val/100; render(); }
+function setPri(p, btn) {
+  curPri = p;
+  document.querySelectorAll('.pri-btn').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  render();
+}
+function setFact(k, v) { facts[k] = Math.max(0, parseInt(v)||0); render(); }
+
+function arrow(pct, col) {
+  return `<div class="harrow">
+    <div class="hpct" style="color:${col||'#888'};">${pct}</div>
+    <div class="hline"><div class="hdash"></div><div class="htip">▶</div></div>
+  </div>`;
+}
+
+function render() {
+  const p = PRI[curPri];
+  const c = calc(p.ti);
+  const onTrack = c.dH <= daysLeft;
+
+  document.getElementById('priMeta').innerHTML = `
+    <div class="pm"><div class="pm-val" style="color:${p.color};">${p.ti}</div><div class="pm-lbl">TI / тиж</div></div>
+    <div class="pm"><div class="pm-val" style="color:${onTrack?'#0F6E56':'#E24B4A'};">${c.dH}д</div><div class="pm-lbl">до закриття</div></div>
+    <div class="pm"><div class="pm-val">${daysLeft}д</div><div class="pm-lbl">залишилось</div></div>`;
+
+  // RS = inbound RS + outbound RS
+  const obRS = +(CV.obLeads * CV.obToRS).toFixed(1);
+  const totalRS = +(c.rs + obRS).toFixed(1);
+
+  // Таргет воронка з outbound
+  // Layout: [App Review]  [Outbound Leads (input)]
+  //              \              /
+  //               → [RS дзвінків] → [CV Review] → [TI] → [Hired]
+  const tfEl = document.getElementById('targetFunnel');
+  tfEl.style.flexDirection = 'column';
+  tfEl.style.alignItems = 'stretch';
+  tfEl.style.gap = '8px';
+
+  // Рядок 1: App Review + Outbound
+  const appColor = {bg:'#E6F1FB', bc:'#185FA580', tc:'#185FA5', kB:'#E6F1FB', kC:'#0C447C'};
+  const obColor  = {bg:'#E1F5EE', bc:'#0F6E5680', tc:'#0F6E56'};
+
+  const row1 = `<div style="display:flex;align-items:flex-end;gap:8px;">
+    <div class="hnode" style="flex:1;">
+      <div class="hbox" style="background:${appColor.bg};border:1px solid ${appColor.bc};width:100%;">
+        <div class="hlbl" style="color:${appColor.tc};">App Review</div>
+        <div class="hval" style="color:${appColor.tc};">${c.app}</div>
+        <div class="hsub" style="color:${appColor.tc};">інбаунд/тиж</div>
+        <div class="hkpi" style="background:${appColor.kB};color:${appColor.kC};">KPI Comms</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding-bottom:12px;flex-shrink:0;">
+      <div style="font-size:10px;font-weight:500;color:#888780;margin-bottom:3px;">${Math.round(CV.appToRS*100)}%</div>
+      <div style="display:flex;align-items:center;"><div style="height:2px;width:20px;background:#D3D1C7;"></div><span style="font-size:13px;color:#D3D1C7;margin-left:-3px;">▶</span></div>
+    </div>
+    <div class="hnode" style="flex:1.3;">
+      <div class="hbox" style="background:#EEEDFE;border:1px solid #534AB780;width:100%;">
+        <div class="hlbl" style="color:#534AB7;">RS дзвінків</div>
+        <div class="hval" style="color:#534AB7;">${totalRS}</div>
+        <div class="hsub" style="color:#534AB7;">скрінінгів/тиж</div>
+        <div class="hkpi" style="background:#EEEDFE;color:#3C3489;">KPI Рекрутер</div>
+        ${obRS>0?`<div style="font-size:9px;color:#0F6E56;margin-top:3px;">+${obRS} з outbound</div>`:''}
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding-bottom:12px;flex-shrink:0;">
+      <div style="font-size:10px;font-weight:500;color:#888780;margin-bottom:3px;">${Math.round(CV.rsToCV*100)}%</div>
+      <div style="display:flex;align-items:center;"><div style="height:2px;width:20px;background:#D3D1C7;"></div><span style="font-size:13px;color:#D3D1C7;margin-left:-3px;">▶</span></div>
+    </div>
+    <div class="hnode" style="flex:1;">
+      <div class="hbox" style="background:#E1F5EE;border:1px solid #0F6E5680;width:100%;">
+        <div class="hlbl" style="color:#0F6E56;">CV Review</div>
+        <div class="hval" style="color:#0F6E56;">${+(totalRS * CV.rsToCV).toFixed(1)}</div>
+        <div class="hsub" style="color:#0F6E56;">CV/тиж</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding-bottom:12px;flex-shrink:0;">
+      <div style="font-size:10px;font-weight:500;color:#888780;margin-bottom:3px;">${Math.round(CV.cvToTI*100)}%</div>
+      <div style="display:flex;align-items:center;"><div style="height:2px;width:20px;background:#D3D1C7;"></div><span style="font-size:13px;color:#D3D1C7;margin-left:-3px;">▶</span></div>
+    </div>
+    <div class="hnode" style="flex:1;">
+      <div class="hbox" style="background:#FFF9E6;border:1px solid #BA751780;width:100%;">
+        <div class="hlbl" style="color:#BA7517;">Tech Interview</div>
+        <div class="hval" style="color:#BA7517;">${p.ti}</div>
+        <div class="hsub" style="color:#BA7517;">TI/тиж</div>
+        <div class="hkpi" style="background:#FFF9E6;color:#633806;">${curPri.toUpperCase()} priority</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;padding-bottom:12px;flex-shrink:0;">
+      <div style="font-size:10px;font-weight:500;color:#888780;margin-bottom:3px;">${Math.round(CV.tiToHire*100)}%</div>
+      <div style="display:flex;align-items:center;"><div style="height:2px;width:20px;background:#D3D1C7;"></div><span style="font-size:13px;color:#D3D1C7;margin-left:-3px;">▶</span></div>
+    </div>
+    <div class="hnode" style="flex:1;">
+      <div class="hbox" style="background:#EAF3DE;border:1px solid #3B6D1180;width:100%;">
+        <div class="hlbl" style="color:#27500A;">Hired</div>
+        <div class="hval" style="color:#27500A;">1</div>
+        <div class="hsub" style="color:#27500A;">за ~${c.wH}тиж</div>
+      </div>
+    </div>
+  </div>`;
+
+  // Рядок 2: Outbound з інпутом + стрілка вгору до RS
+  const row2 = `<div style="display:flex;align-items:flex-start;gap:8px;">
+    <div style="flex:1;"></div>
+    <div style="width:20px;flex-shrink:0;"></div>
+    <div style="flex:1.3;position:relative;">
+      <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:16px;color:#0F6E56;line-height:1;">↑</div>
+      <div style="font-size:9px;color:#0F6E56;text-align:center;margin-bottom:4px;margin-top:4px;">${Math.round(CV.obToRS*100)}% → RS</div>
+      <div class="hbox" style="background:#E1F5EE;border:1px solid #0F6E5680;width:100%;">
+        <div class="hlbl" style="color:#0F6E56;">Outbound Leads</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0;">
+          <input type="number" min="0" max="200" value="${CV.obLeads}"
+            style="width:56px;font-size:20px;font-weight:500;color:#0F6E56;border:none;border-bottom:1.5px solid #0F6E5680;background:transparent;text-align:center;outline:none;"
+            oninput="CV.obLeads=Math.max(0,+this.value||0);render();">
+          <span style="font-size:11px;color:#0F6E56;opacity:.7;">/тиж</span>
+        </div>
+        <div class="hsub" style="color:#0F6E56;">→ ${obRS} RS дзвінків</div>
+      </div>
+    </div>
+    <div style="flex:3.5;"></div>
+  </div>`;
+
+  tfEl.innerHTML = row1 + row2;
+
+  const tgtApp2wk = Math.round(c.app * weeksOpen);
+  const appPct = Math.min(100, Math.round(11/tgtApp2wk*100));
+  const appC = appPct>=100?'#0F6E56':appPct>=70?'#BA7517':'#E24B4A';
+  document.getElementById('inPct149').innerHTML =
+    `<span style="color:${appC};">${appPct}% від таргету (${tgtApp2wk})</span>`;
+
+  const sfn = [
+    {lbl:'RS', val:0, tgt:Math.round(c.rs*weeksOpen), bg:'#EEEDFE', bc:'#534AB780', tc:'#534AB7'},
+    {lbl:'CV Review', val:0, tgt:Math.round(c.cv*weeksOpen), bg:'#E1F5EE', bc:'#0F6E5680', tc:'#0F6E56'},
+    {lbl:'Tech Interview', val:0, tgt:p.ti*weeksOpen, bg:'#FFF9E6', bc:'#BA751780', tc:'#BA7517'},
+    {lbl:'Hired', val:0, tgt:0, bg:'#EAF3DE', bc:'#3B6D1180', tc:'#27500A'},
+  ];
+  let sf = '';
+  sfn.forEach((n,i) => {
+    const pp = n.tgt>0 ? Math.min(100, Math.round(n.val/n.tgt*100)) : null;
+    const pc = pp!=null ? (pp>=100?'#0F6E56':pp>=70?'#BA7517':'#E24B4A') : '#9b9b96';
+    sf += `<div class="hnode"><div class="hbox" style="background:${n.bg};border:1px solid ${n.bc};min-width:90px;">
+      <div class="hlbl" style="color:${n.tc};">${n.lbl}</div>
+      <div class="hval" style="color:${n.tc};">${n.val}</div>
+      ${pp!=null ? `<div class="pct-tag" style="color:${pc};">${pp}% від таргету (${Math.round(n.tgt)})</div>`
+                 : `<div class="hsub" style="color:#9b9b96;">відкрита</div>`}
+    </div></div>`;
+    if(i<sfn.length-1) sf += arrow('—%', '#9b9b96');
+  });
+  document.getElementById('factFunnel149').innerHTML = sf;
+
+  const kpis = [
+    {who:'Comms', kpi:c.app, metric:'App Review / тиж', fk:'comms', col:'#185FA5'},
+    {who:'Рекрутер', kpi:c.rs, metric:'RS дзвінків / тиж', fk:'rs', col:'#534AB7'},
+    {who:'Рекрутер', kpi:p.ti, metric:'Tech Interview / тиж', fk:'ti', col:'#BA7517'},
+  ];
+  document.getElementById('kpiBody').innerHTML = kpis.map(r => {
+    const f=facts[r.fk], ratio=r.kpi>0?f/r.kpi:0;
+    const [sc,st]=f===0?['bna','—']:ratio>=1?['bok','Виконано']:ratio>=0.7?['bwarn','Відстає']:['bbad','Критично'];
+    return `<tr>
+      <td><b>${r.who}</b></td>
+      <td class="kn" style="color:${r.col};">${r.kpi}</td>
+      <td style="color:#6b6b67;">${r.metric}</td>
+      <td style="text-align:center;"><input class="fi" type="number" min="0" value="${f}" onchange="setFact('${r.fk}',this.value)"></td>
+      <td style="text-align:center;"><span class="badge ${sc}">${st}</span></td>
+    </tr>`;
+  }).join('');
+
+  const tgtAppNow = Math.round(c.app * weeksOpen);
+  const ap = Math.min(100, Math.round(11/tgtAppNow*100));
+  const tp = Math.round(weeksOpen/(weeksOpen+weeksLeft)*100);
+  document.getElementById('currProg').innerHTML = `
+    <div class="prog-row">
+      <div class="prog-lbl"><span>Inbound накопичено</span><span style="color:${ap>=100?'#0F6E56':'#E24B4A'};">11 з ${tgtAppNow} (${weeksOpen} тиж)</span></div>
+      <div class="prog-wrap"><div class="prog-bar" style="width:${ap}%;background:${ap>=100?'#0F6E56':'#E24B4A'};"></div></div>
+    </div>
+    <div class="prog-row" style="margin-top:8px;">
+      <div class="prog-lbl"><span>Час</span><span>${weeksOpen} тиж відкрита · ${daysLeft}д залишилось</span></div>
+      <div class="prog-wrap"><div class="prog-bar" style="width:${tp}%;background:#185FA5;"></div></div>
+    </div>`;
+
+  const projApp = 11 + Math.round(c.app*weeksLeft);
+  const projRS  = Math.round(projApp*CV.appToRS);
+  const projTI  = Math.round(projRS*CV.rsToCV*CV.cvToTI);
+  const hireP   = Math.min(99, Math.round(projTI*CV.tiToHire*100));
+  const hC = hireP>60?'#0F6E56':hireP>30?'#BA7517':'#E24B4A';
+  document.getElementById('closeForecast').innerHTML = `
+    <div style="font-size:11px;color:#6b6b67;margin-bottom:8px;">При дотриманні KPI за ${Math.round(weeksLeft)} тиж що залишились:</div>
+    ${[
+      ['Нових App Review', Math.round(c.app*weeksLeft),'#185FA5'],
+      ['Всього App Review', projApp,'#185FA5'],
+      ['Прогноз RS дзвінків', projRS,'#534AB7'],
+      ['Прогноз Tech Interviews', projTI,'#BA7517'],
+      ['Ймовірність hire до дедлайну', hireP+'%', hC],
+    ].map(([l,v,col])=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px;"><span style="color:#6b6b67;">${l}</span><span style="font-weight:500;color:${col};">${v}</span></div>`).join('')}
+    <div style="margin-top:10px;padding:8px 10px;background:${onTrack?'#EAF3DE':'#FCEBEB'};border-radius:8px;font-size:12px;font-weight:500;color:${onTrack?'#27500A':'#791F1F'};">
+      ${onTrack?'Вкладається в дедлайн при поточному пріоритеті':'Ризик не встигнути — підвищ пріоритет або додай outbound'}
+    </div>`;
+
+  const currPW = +(11/weeksOpen).toFixed(1);
+  const sigs = [
+    {ok:currPW>=c.app, warn:currPW>=c.app*.7,
+      ttl: currPW>=c.app?`Inbound темп ок: ${currPW}/тиж ≥ таргет ${c.app}/тиж`:`Inbound відстає: ${currPW}/тиж vs таргет ${c.app}/тиж`,
+      det: currPW<c.app?`Потрібно +${(c.app-currPW).toFixed(1)}/тиж — або Comms або outbound соурсинг`:''
+    },
+    {ok:true, warn:true,
+      ttl:'Outbound активний: 12 лідів, 7 contacted, 6 в Reached Out, 1 Replied',
+      det:'Replied летить прямо на RS — чекаємо першого RS дзвінка цього тижня'
+    },
+    {ok:true, warn:true,
+      ttl:'Вакансія відкрита 2 тижні — RS ще не стартував (очікується цього тижня)',
+      det:''
+    },
+    {ok:onTrack, warn:c.dH<=daysLeft*1.3,
+      ttl: onTrack?`Прогноз ~${c.dH}д вкладається в дедлайн (${daysLeft}д залишилось)`:`Прогноз ${c.dH}д > дедлайн ${daysLeft}д`,
+      det: !onTrack?'Розглянь підвищення пріоритету до High або паралельний запуск outbound':''
+    },
+  ];
+  document.getElementById('signals').innerHTML = sigs.map(s=>{
+    const cls=s.ok?'s-ok':s.warn?'s-warn':'s-bad';
+    const dot=s.ok?'dok':s.warn?'dwarn':'dbad';
+    return `<div class="sig ${cls}"><div class="sdot ${dot}"></div><div class="sig-body"><div class="sig-ttl">${s.ttl}</div>${s.det?`<div class="sig-det">${s.det}</div>`:''}</div></div>`;
+  }).join('');
+
+  const advs = [
+    {stage:'CV Review → Tech Interview (18% · бенчмарк: 30–50%)', status:'warn',
+      text:'Найслабша ланка. Кожен 5-й з CV Review доходить до TI.',
+      tips:['Intake session з HM: що відхиляється після CV Review і чому','Спільний CV Review чекліст з HM — однакові критерії','Перевір швидкість фідбеку і якість комунікації для TI','Розглянь тестове завдання між RS і TI']
+    },
+    {stage:'App Review → RS (35% · бенчмарк: 20–40%)', status:'ok',
+      text:'Конверсія в нормі. Підтримуй чіткі критерії скорингу.',
+      tips:['Якщо впаде нижче 20% — перевір JD','Відстежуй топ причини відмов щотижня']
+    },
+    {stage:'TI → Hired (10% бенчмарк · факт #38: 50%)', status:'warn',
+      text:'Консервативний бенчмарк. По #38 фактично 1 з 2 = 50%.',
+      tips:['Якщо падає нижче 10% — сигнал що на TI приходять не ті кандидати','Збирай зворотний зв\'язок від HM після кожного TI','Якщо >30% відмов від кандидатів — перевір оффер']
+    },
+  ];
+  document.getElementById('advice').innerHTML = advs.map(a=>{
+    const cls=a.status==='ok'?'s-ok':'s-warn';
+    const dot=a.status==='ok'?'dok':'dwarn';
+    return `<div class="sig ${cls}" style="flex-direction:column;align-items:flex-start;margin-bottom:8px;">
+      <div style="display:flex;gap:8px;width:100%;">
+        <div class="sdot ${dot}" style="margin-top:3px;flex-shrink:0;"></div>
+        <div><div class="sig-ttl">${a.stage}</div><div class="sig-det">${a.text}</div></div>
+      </div>
+      <ul style="margin-top:8px;padding-left:20px;font-size:11px;line-height:1.8;opacity:.9;">
+        ${a.tips.map(t=>`<li>${t}</li>`).join('')}
+      </ul>
+    </div>`;
+  }).join('');
+}
+
+render();
+</script>
+</body>
+</html>
