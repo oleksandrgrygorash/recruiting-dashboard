@@ -377,7 +377,7 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
 <div class="panel" id="panel-em">
 
 <h2>Event Manager — Hiring Forecast</h2>
-<p class="sub">Відкрита: 18 серп. 2025 · ~34 тижні · Пріоритет: Medium · 256 inbound · 0 активних · 0 hires</p>
+<p class="sub">Відкрита: 18 серп. 2025 · ~34 тижні · Пріоритет: Medium · 261 inbound · 4 активних · 0 hires</p>
 
 <!-- ── PLANNING ── -->
 <div class="section-plan">
@@ -388,22 +388,6 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
   <button class="pri-btn low"      onclick="setPri('low',this,'em')">Low</button>
   <button class="pri-btn med act"  onclick="setPri('med',this,'em')">Medium</button>
   <button class="pri-btn high"     onclick="setPri('high',this,'em')">High</button>
-  <div style="width:1px;background:rgba(0,0,0,.1);height:24px;margin:0 4px;flex-shrink:0;"></div>
-  <label style="font-size:12px;color:#6b6b67;font-weight:500;">Закрити за</label>
-  <input type="number" min="1" max="52" value="4"
-    style="width:48px;font-size:14px;font-weight:500;text-align:center;border:0.5px solid rgba(0,0,0,.2);border-radius:8px;padding:4px 6px;background:#f5f5f3;outline:none;"
-    oninput="
-      const tw=Math.max(1,+this.value||4);
-      VACANCIES['em'].targetWeeks=tw;
-      VACANCIES['em'].mode='deadline';
-      const tiN=+(1/(tw*VACANCIES['em'].CV.tiToHire)).toFixed(1);
-      const ip=tiN<=1.2?'low':tiN<=2.5?'med':'high';
-      VACANCIES['em'].curPri=ip;
-      document.querySelectorAll('#panel-em .pri-btn').forEach(b=>b.classList.remove('act'));
-      document.querySelector('#panel-em .pri-btn.'+ip).classList.add('act');
-      render('em');
-    ">
-  <label style="font-size:12px;color:#6b6b67;font-weight:500;">тижнів</label>
   <div class="pri-meta" id="priMeta-em"></div>
 </div>
 
@@ -411,9 +395,9 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
   <div class="ctitle">Конверсії воронки — підкрути для планування таргету</div>
   <div class="slider-grid">
     <div class="slider-item">
-      <div class="slider-head"><span class="slider-lbl">App Review → RS</span><span class="slider-val" id="sv-appToRS-em" style="color:#E24B4A;">20%</span></div>
-      <input type="range" min="5" max="80" step="1" value="20" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-appToRS-em').textContent=this.value+'%';setConv('appToRS',+this.value,'em')">
-      <div class="slider-foot"><span>факт EM: 20%</span><span>бенчмарк: 20–40%</span></div>
+      <div class="slider-head"><span class="slider-lbl">App Review → RS</span><span class="slider-val" id="sv-appToRS-em" style="color:#E24B4A;">19%</span></div>
+      <input type="range" min="5" max="80" step="1" value="19" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-appToRS-em').textContent=this.value+'%';setConv('appToRS',+this.value,'em')">
+      <div class="slider-foot"><span>факт EM: 19% (49/261)</span><span>бенчмарк: 20–40%</span></div>
     </div>
     <div class="slider-item">
       <div class="slider-head"><span class="slider-lbl">Outbound → RS</span><span class="slider-val" id="sv-obToRS-em" style="color:#BA7517;">28%</span></div>
@@ -421,19 +405,19 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
       <div class="slider-foot"><span>дефолт: 28%</span><span>бенчмарк: 25–35%</span></div>
     </div>
     <div class="slider-item">
-      <div class="slider-head"><span class="slider-lbl">RS → CV Review</span><span class="slider-val" id="sv-rsToCV-em" style="color:#BA7517;">69%</span></div>
-      <input type="range" min="30" max="100" step="1" value="69" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-rsToCV-em').textContent=this.value+'%';setConv('rsToCV',+this.value,'em')">
-      <div class="slider-foot"><span>факт EM: 69%</span><span>бенчмарк: —</span></div>
+      <div class="slider-head"><span class="slider-lbl">RS → CV Review</span><span class="slider-val" id="sv-rsToCV-em" style="color:#E24B4A;">53%</span></div>
+      <input type="range" min="30" max="100" step="1" value="53" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-rsToCV-em').textContent=this.value+'%';setConv('rsToCV',+this.value,'em')">
+      <div class="slider-foot"><span>факт EM: 53% (26/49)</span><span>бенчмарк: —</span></div>
     </div>
     <div class="slider-item">
-      <div class="slider-head"><span class="slider-lbl">CV Review → TI</span><span class="slider-val" id="sv-cvToTI-em" style="color:#0F6E56;">77%</span></div>
-      <input type="range" min="5" max="100" step="1" value="77" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-cvToTI-em').textContent=this.value+'%';setConv('cvToTI',+this.value,'em')">
-      <div class="slider-foot"><span>факт EM: 77%</span><span>бенчмарк: 30–50%</span></div>
+      <div class="slider-head"><span class="slider-lbl">CV Review → TI</span><span class="slider-val" id="sv-cvToTI-em" style="color:#0F6E56;">73%</span></div>
+      <input type="range" min="5" max="100" step="1" value="73" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-cvToTI-em').textContent=this.value+'%';setConv('cvToTI',+this.value,'em')">
+      <div class="slider-foot"><span>факт EM: 73% (19/26 пряма CV→TI)</span><span>бенчмарк: 30–50%</span></div>
     </div>
     <div class="slider-item">
-      <div class="slider-head"><span class="slider-lbl">TI → Next Stage</span><span class="slider-val" id="sv-tiToNext-em" style="color:#E24B4A;">19%</span></div>
-      <input type="range" min="10" max="100" step="1" value="19" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-tiToNext-em').textContent=this.value+'%';setConv('tiToNext',+this.value,'em')">
-      <div class="slider-foot"><span>факт EM: 19%</span><span>бенчмарк: 50%</span></div>
+      <div class="slider-head"><span class="slider-lbl">TI → Next Stage</span><span class="slider-val" id="sv-tiToNext-em" style="color:#E24B4A;">14%</span></div>
+      <input type="range" min="10" max="100" step="1" value="14" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-tiToNext-em').textContent=this.value+'%';setConv('tiToNext',+this.value,'em')">
+      <div class="slider-foot"><span>факт EM: 14% (4/28 TI→Final)</span><span>бенчмарк: 50%</span></div>
     </div>
     <div class="slider-item">
       <div class="slider-head"><span class="slider-lbl">TI → Hired</span><span class="slider-val" id="sv-tiToHire-em" style="color:#BA7517;">10%</span></div>
@@ -453,9 +437,32 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
 
 </div><!-- /section-plan -->
 
-<!-- ── MONITORING ── -->
+<!-- ── MONITORING EM ── -->
 <div class="section-monitor">
 <div class="section-label section-label-monitor">Моніторинг воронки</div>
+
+<div class="card">
+  <div class="ctitle">Факт воронки — за весь час <span style="font-size:11px;font-weight:400;color:#9b9b96;">(станом на 15 квіт. 2026)</span></div>
+  <div class="streams">
+    <div class="stream s-in">
+      <div class="s-title" style="color:#0C447C;">Inbound потік</div>
+      <div class="s-flow" id="inboundFlow-em"></div>
+    </div>
+    <div class="stream s-out">
+      <div class="s-title" style="color:#085041;">Outbound потік</div>
+      <div class="s-flow" id="outboundFlow-em"></div>
+    </div>
+  </div>
+  <div class="merge-row">
+    <div class="ml"></div><div class="mpill" id="emMerge">злиття на Recruitment Screening · RS досягнуто: <b>52</b></div><div class="mr"></div>
+  </div>
+  <div class="hfunnel" id="factFunnel149-em"></div>
+</div>
+
+<div class="card">
+  <div class="ctitle">Поточний стан</div>
+  <div id="currProg-em"></div>
+</div>
 
 <div class="card">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
@@ -500,14 +507,13 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
 <div class="panel" id="panel-seo"><div class="empty-state"><div class="empty-icon">📋</div><h3>SEO Project Manager</h3><p>Дані по цій вакансії ще не додані.<br>Буде заповнено на наступному етапі.</p></div></div>
 
 <script>
-// ═══════════════════ STATE ═══════════════════
 const VACANCIES = {
   pa: {
     CV: {appToRS:.27, rsToCV:.70, cvToTI:.60, tiToHire:.10, tiToNext:.50, obToRS:.10, obLeads:0},
     curPri: 'med',
-    facts:  {comms:6, rs:2, ti:0, tiNext:0, leads:4},  // факт 06–12 Apr (inbound=6, outbound=4)
-    facts2: {comms:3, rs:0, ti:0, leads:30},            // факт 13–15 Apr незакінч. (inbound=3, outbound=30)
-    factsAccum: {comms:15, rs:4, ti:0, leads:46},       // накопичений за весь час (Ashby API 15 Apr)
+    facts:  {comms:6, rs:2, ti:0, tiNext:0, leads:4},
+    facts2: {comms:3, rs:0, ti:0, leads:30},
+    factsAccum: {comms:15, rs:4, ti:0, leads:46},
     outbound: {newLead:46, reachedOut:34, replied:1, archived:5},
     sources: [
       {name:'Inbound (Applied+Djinni)', app:9,  rs:0},
@@ -518,11 +524,21 @@ const VACANCIES = {
     weeksOpen: 3, inbound: 15, targetWeeks: 5, deadlineWeeks: 8, mode: 'priority',
   },
   em: {
-    CV: {appToRS:.20, rsToCV:.69, cvToTI:.77, tiToHire:.10, tiToNext:.19, obToRS:.28, obLeads:0},
-    curPri: 'med', facts: {comms:0, rs:1, ti:0, tiNext:0}, facts2: {comms:0, rs:0, ti:0},
-    factsAccum: {comms:256, rs:51, cv:35, ti:27, tiNext:5},
-    openedAt: new Date('2025-08-18'), today: new Date('2026-04-11'),
-    weeksOpen: 34, inbound: 256, targetWeeks: 4, mode: 'priority',
+    CV: {appToRS:.19, rsToCV:.53, cvToTI:.73, tiToHire:.00, tiToNext:.14, obToRS:.28, obLeads:0},
+    curPri: 'med',
+    facts:  {comms:0, rs:1, ti:1, tiNext:0},
+    facts2: {comms:0, rs:0, ti:0},
+    factsAccum: {comms:261, rs:49, cv:26, ti:28, tiNext:4, offer:2},
+    outbound: {newLead:5, reachedOut:5, replied:5, rsFromOb:2, archived:1},
+    sources: [
+      {name:'Inbound (Applied)',  app:125, rs:0},
+      {name:'DOU',                app:99,  rs:0},
+      {name:'Instagram',          app:29,  rs:0},
+      {name:'Referral',           app:4,   rs:0},
+      {name:'LinkedIn',           app:2,   rs:0},
+    ],
+    openedAt: new Date('2025-08-18'), today: new Date('2026-04-15'),
+    weeksOpen: 34, inbound: 261, targetWeeks: 4, deadlineWeeks: 999, mode: 'priority',
   },
 };
 
@@ -532,7 +548,6 @@ const PRI = {
   high: {ti:3, color:'#E24B4A', bg:'#FCEBEB'},
 };
 
-// ═══════════════════ TAB SWITCH ═══════════════════
 function switchTab(id, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -540,13 +555,12 @@ function switchTab(id, el) {
   document.getElementById('panel-' + id).classList.add('active');
 }
 
-// ═══════════════════ CALC ═══════════════════
 function calc(CV, priKey) {
   const ti = PRI[priKey].ti;
   const cv  = +(ti / CV.cvToTI).toFixed(1);
   const rs  = +(cv / CV.rsToCV).toFixed(1);
   const app = Math.ceil(rs / CV.appToRS);
-  const wH  = +(1 / (ti * CV.tiToHire)).toFixed(1);
+  const wH  = CV.tiToHire > 0 ? +(1 / (ti * CV.tiToHire)).toFixed(1) : 999;
   return {ti, cv, rs, app, wH, dH: Math.round(wH*7)};
 }
 
@@ -558,16 +572,12 @@ function setPri(p, btn, vId) {
     VACANCIES[vId].mode = 'priority';
     const v = VACANCIES[vId];
     if (vId === 'pa') {
-      // Для PA рахуємо дедлайн від відкриття: weeksLeft = 1/tiToHire/ti → deadlineWeeks = weeksLeft + weeksOpen
       const wH = Math.round(1 / (PRI[p].ti * v.CV.tiToHire));
       v.deadlineWeeks = wH + v.weeksOpen;
       v.targetWeeks = wH;
-      const el = document.querySelector('#panel-pa input[type=number]');
-      if (el) el.value = v.deadlineWeeks;
     } else {
-      const wH = +(1 / (PRI[p].ti * v.CV.tiToHire)).toFixed(1);
-      const el = document.querySelector('#panel-em input[type=number]');
-      if (el) el.value = Math.round(wH);
+      const tiToHireSafe = v.CV.tiToHire > 0 ? v.CV.tiToHire : 0.1;
+      const wH = +(1 / (PRI[p].ti * tiToHireSafe)).toFixed(1);
       v.targetWeeks = Math.round(wH);
     }
   }
@@ -576,16 +586,12 @@ function setPri(p, btn, vId) {
   render(vId);
 }
 
-function setFact(k, v, vId) { VACANCIES[vId].facts[k] = Math.max(0, parseInt(v)||0); render(vId); }
-
 function arrow(pct, col) {
   return `<div class="harrow"><div class="hpct" style="color:${col||'#888'};">${pct}</div><div class="hline"><div class="hdash"></div><div class="htip">▶</div></div></div>`;
 }
 
-// ═══════════════════ PLAN VS FACT ═══════════════════
 function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
   const vId = v === VACANCIES.em ? 'em' : 'pa';
-  // Єдине джерело істини — стейт вакансії
   const fData = {
     app: vId === 'em' ? v.inbound : v.inbound,
     rs:  (v.factsAccum || {}).rs || 0,
@@ -599,21 +605,17 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
   const tw = v.targetWeeks || 4;
   const wo = v.weeksOpen;
 
-  // Факт = реальний темп/тиждень
   const factApp = +(fData.app / wo).toFixed(1);
   const factRS  = +(fData.rs  / wo).toFixed(1);
   const factCV  = +(fData.cv  / wo).toFixed(1);
   const factTI  = +(fData.ti  / wo).toFixed(1);
 
-  // Фактичні конверсії
   const factConvRS = fData.app > 0 ? Math.round(fData.rs / fData.app * 100) : 0;
   const factConvCV = fData.rs  > 0 ? Math.round(fData.cv / fData.rs  * 100) : 0;
   const factConvTI = fData.cv  > 0 ? Math.round(fData.ti / fData.cv  * 100) : 0;
 
-  // Outbound Leads рядок
   const obLeadsTarget = CV.obLeads || 0;
-  const factLeadsPW = vId === 'pa' ? +((v.factsAccum||{}).leads / wo || 0).toFixed(1) : 0; // накопичено / тижні
-  const factObRS = +(factLeadsPW * CV.obToRS).toFixed(1);
+  const factLeadsPW = vId === 'pa' ? +((v.factsAccum||{}).leads / wo || 0).toFixed(1) : 0;
 
   const stages = [
     { name: 'App Review',     tgt: tgtApp,       fact: factApp,     col: '#185FA5', tgtConv: null,                       factConv: null       },
@@ -623,11 +625,10 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
     { name: 'TI',             tgt: tgtTI,        fact: factTI,      col: '#BA7517', tgtConv: Math.round(CV.cvToTI*100),  factConv: factConvTI },
   ];
 
-  // Перший етап де поточний темп не покриває таргет — ігноруємо Outbound
   let firstBroken = null;
   stages.forEach((s, i) => {
     if (firstBroken !== null) return;
-    if (s.isOb) return; // Outbound — паралельний канал, не частина основного флоу
+    if (s.isOb) return;
     if (s.fact < s.tgt * 0.9) firstBroken = i;
   });
 
@@ -640,7 +641,6 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
   </div>`;
 
   stages.forEach((s, i) => {
-    // Пропускаємо Outbound Leads якщо таргет = 0 і факт = 0
     if (s.isOb && s.tgt === 0 && s.fact === 0) return;
 
     const pct    = s.tgt > 0 ? Math.round(s.fact / s.tgt * 100) : (s.isOb ? 0 : 100);
@@ -684,11 +684,10 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
     </div>`;
   });
 
-  // Підсумок
   const tiPct    = tgtTI > 0 ? Math.round(factTI / tgtTI * 100) : 0;
   const bgCol    = tiPct >= 90 ? '#EAF3DE' : tiPct >= 50 ? '#FFF9E6' : '#FCEBEB';
   const txtCol   = tiPct >= 90 ? '#27500A' : tiPct >= 50 ? '#633806' : '#791F1F';
-  const weeksAtCurrPace = factTI > 0 ? Math.round(1 / (factTI * v.CV.tiToHire)) : 999;
+  const weeksAtCurrPace = (factTI > 0 && v.CV.tiToHire > 0) ? Math.round(1 / (factTI * v.CV.tiToHire)) : 999;
   const rootCause = firstBroken !== null
     ? `Основна причина: темп падає на "${stages[firstBroken].name}" (${stages[firstBroken].fact}/тиж факт vs ${stages[firstBroken].tgt}/тиж таргет)`
     : tiPct >= 90
@@ -703,7 +702,6 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
     <div style="font-size:11px;color:#6b6b67;margin-top:4px;">${rootCause}</div>
   </div>`;
 
-  // TI → Next Stage — тільки для EM (для PA немає даних)
   if (vId === 'em') {
     const tiNextBench = 50;
     const tiNextFact  = (v.factsAccum||{}).tiNext || 5;
@@ -721,7 +719,7 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
         <div class="sdot ${tiNextOk ? 'dok' : 'dbad'}"></div>
         <div class="sig-body">
           <div class="sig-ttl">${tiNextOk ? `${tiNextPct}% — вище бенчмарку ${tiNextBench}%, все ок` : `${tiNextPct}% — нижче бенчмарку ${tiNextBench}% · Потрібен sync рекрутер + HM`}</div>
-          ${!tiNextOk ? '<div class="sig-det">Менше ніж кожен 2-й кандидат після TI проходить далі. Варто переглянути alignment між рекрутером і HM: які кандидати доходять до TI і за якими критеріями HM їх оцінює.</div>' : ''}
+          ${!tiNextOk ? '<div class="sig-det">Менше ніж кожен 2-й кандидат після TI проходить далі. Варто переглянути alignment між рекрутером і HM.</div>' : ''}
         </div>
       </div>
     </div>`;
@@ -734,7 +732,6 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
   el.innerHTML = html;
 }
 
-// ═══════════════════ RENDER ═══════════════════
 function render(vId) {
   const v = VACANCIES[vId];
   const CV = v.CV;
@@ -742,54 +739,50 @@ function render(vId) {
   const c = calc(CV, v.curPri);
   const deadline   = new Date(v.openedAt.getTime() + 60*864e5);
   const daysLeft   = Math.max(0, Math.round((deadline - v.today)/864e5));
-  // PA: weeksLeft = deadlineWeeks - weeksOpen; EM: targetWeeks; інші: від 60-день дедлайну
   const weeksLeft  = vId === 'pa'
     ? Math.max(1, (v.deadlineWeeks || 8) - v.weeksOpen)
-    : vId === 'em'
-      ? (v.targetWeeks || 4)
-      : daysLeft / 7;
+    : vId === 'em' ? (v.targetWeeks || 4) : daysLeft / 7;
+  const emWeeksDelay = vId === 'em' ? v.weeksOpen - (v.targetWeeks || 4) : 0;
   const onTrack    = c.dH <= weeksLeft * 7;
   const obRS       = +(CV.obLeads * CV.obToRS).toFixed(1);
-  const totalRS    = +(c.rs + obRS).toFixed(1);
 
   const weeksTarget = vId === 'pa' ? weeksLeft : (v.targetWeeks || 4);
   if (vId === 'em' || vId === 'pa') {
     const tw = weeksTarget;
-    const tiNeeded = +(1 / (tw * CV.tiToHire)).toFixed(1);
+    const tiToHireSafe = CV.tiToHire > 0 ? CV.tiToHire : 0.1;
+    const tiNeeded = +(1 / (tw * tiToHireSafe)).toFixed(1);
     const implPri  = tiNeeded <= 1.2 ? {lbl:'LOW', col:'#3B6D11'} : tiNeeded <= 2.5 ? {lbl:'MED', col:'#BA7517'} : {lbl:'HIGH', col:'#E24B4A'};
-    const factTIperWk = vId === 'em' ? +(27 / 34).toFixed(2) : +(v.facts.ti / Math.max(1, v.weeksOpen)).toFixed(2);
-    const weeksAtCurr = factTIperWk > 0 ? Math.round(1 / (factTIperWk * CV.tiToHire)) : 999;
-    const onCurr = weeksAtCurr <= tw;
-    const deadlineLbl = vId === 'pa'
-      ? `${v.deadlineWeeks || 8}тиж від відкриття`
-      : `${v.targetWeeks || 4}тиж`;
-    document.getElementById(`priMeta-${vId}`).innerHTML = `
-      <div class="pm"><div class="pm-val" style="color:${implPri.col};">${implPri.lbl}</div><div class="pm-lbl">implied priority</div></div>
-      <div class="pm"><div class="pm-val" style="color:#BA7517;">${tiNeeded}</div><div class="pm-lbl">TI / тиж потрібно</div></div>
-      <div class="pm"><div class="pm-val" style="color:${onTrack?'#0F6E56':'#E24B4A'};">${tw}тиж</div><div class="pm-lbl">залишилось</div></div>
-      <div class="pm"><div class="pm-val">${vId === 'pa' ? (v.deadlineWeeks || 8) : (v.targetWeeks || 4)}тиж</div><div class="pm-lbl">target</div></div>`;
-  } else {
-    document.getElementById(`priMeta-${vId}`).innerHTML = `
-      <div class="pm"><div class="pm-val" style="color:${p.color};">${p.ti}</div><div class="pm-lbl">TI / тиж</div></div>
-      <div class="pm"><div class="pm-val" style="color:${onTrack?'#0F6E56':'#E24B4A'};">${c.dH}д</div><div class="pm-lbl">до закриття</div></div>
-      <div class="pm"><div class="pm-val">${daysLeft}д</div><div class="pm-lbl">залишилось</div></div>`;
+    const factTIperWk = vId === 'em'
+      ? +((v.factsAccum||{}).ti / Math.max(1, v.weeksOpen)).toFixed(2)
+      : +(v.facts.ti / Math.max(1, v.weeksOpen)).toFixed(2);
+
+    if (vId === 'em') {
+      const delayCol = emWeeksDelay > 0 ? '#E24B4A' : '#0F6E56';
+      const delayLbl = emWeeksDelay > 0 ? `-${emWeeksDelay} тиж` : `вчасно`;
+      document.getElementById(`priMeta-${vId}`).innerHTML = `
+        <div class="pm"><div class="pm-val" style="color:${implPri.col};">${implPri.lbl}</div><div class="pm-lbl">implied priority</div></div>
+        <div class="pm"><div class="pm-val" style="color:#BA7517;">${tiNeeded}</div><div class="pm-lbl">TI / тиж потрібно</div></div>
+        <div class="pm"><div class="pm-val" style="color:${delayCol};">${delayLbl}</div><div class="pm-lbl">запізнення</div></div>
+        <div class="pm"><div class="pm-val">${tw}тиж</div><div class="pm-lbl">target</div></div>`;
+    } else {
+      document.getElementById(`priMeta-${vId}`).innerHTML = `
+        <div class="pm"><div class="pm-val" style="color:${implPri.col};">${implPri.lbl}</div><div class="pm-lbl">implied priority</div></div>
+        <div class="pm"><div class="pm-val" style="color:#BA7517;">${tiNeeded}</div><div class="pm-lbl">TI / тиж потрібно</div></div>
+        <div class="pm"><div class="pm-val" style="color:${onTrack?'#0F6E56':'#E24B4A'};">${tw}тиж</div><div class="pm-lbl">залишилось</div></div>
+        <div class="pm"><div class="pm-val">${v.deadlineWeeks || 8}тиж</div><div class="pm-lbl">target</div></div>`;
+    }
   }
 
-  // Unified calc for pa and em — mode='priority' or 'deadline'
+  const tiToHireSafe = CV.tiToHire > 0 ? CV.tiToHire : 0.10;
   const cUnified = (vId === 'em' || vId === 'pa') ? (() => {
-    const tw = weeksLeft; // для PA — залишилось тижнів; для EM — targetWeeks
-    if (v.mode === 'deadline' || vId === 'pa') {
-      const ti  = +(1 / (tw * CV.tiToHire)).toFixed(1);
-      const cv  = +(ti / CV.cvToTI).toFixed(1);
-      const rs  = +(cv / CV.rsToCV).toFixed(1);
-      const app = Math.ceil(rs / CV.appToRS);
-      return {ti, cv, rs, app};
-    } else {
-      return {ti: p.ti, cv: c.cv, rs: c.rs, app: c.app};
-    }
+    const tw = weeksLeft;
+    const ti  = +(1 / (tw * tiToHireSafe)).toFixed(1);
+    const cv  = CV.cvToTI > 0 ? +(ti / CV.cvToTI).toFixed(1) : 0;
+    const rs  = CV.rsToCV > 0 ? +(cv / CV.rsToCV).toFixed(1) : 0;
+    const app = CV.appToRS > 0 ? Math.ceil(rs / CV.appToRS) : 0;
+    return {ti, cv, rs, app};
   })() : null;
 
-  // Уніфіковані KPI
   const kpiTI  = cUnified ? cUnified.ti  : p.ti;
   const kpiRS  = cUnified ? cUnified.rs  : c.rs;
   const kpiApp = cUnified ? cUnified.app : c.app;
@@ -797,15 +790,12 @@ function render(vId) {
   const tfEl = document.getElementById(`targetFunnel-${vId}`);
   tfEl.style.cssText = 'flex-direction:column;align-items:stretch;gap:8px;';
 
-  // RS таргет фіксований. App Review = (RS таргет - outbound RS) / appToRS
-  const kpiRSfixed = kpiRS; // фіксований таргет RS від дедлайну/пріоритету
+  const kpiRSfixed = kpiRS;
   const kpiAppAdjusted = Math.max(0, Math.ceil((kpiRSfixed - obRS) / CV.appToRS));
-  const kpiTotalRS = kpiRSfixed; // RS завжди = таргет (inbound + outbound)
-  const kpiWH = +(1 / (kpiTI * CV.tiToHire)).toFixed(1);
+  const kpiTotalRS = kpiRSfixed;
+  const kpiWH = (CV.tiToHire > 0 && kpiTI > 0) ? +(1 / (kpiTI * CV.tiToHire)).toFixed(1) : "?";
   const kpiNextVal = +(kpiTI*(CV.tiToNext||0.5)).toFixed(1);
 
-  // Grid: 6 колонок [App] [→] [RS] [→] [CV] [→] [TI] [→] [Next]
-  // Hired і Outbound — в окремому рядку під своїми колонками
   const gridStyle = 'display:grid;grid-template-columns:1fr 28px 1.3fr 28px 1fr 28px 1fr 28px 1fr;gap:0;align-items:center;';
 
   const row1 = `<div style="${gridStyle}">
@@ -837,29 +827,20 @@ function render(vId) {
   </div>`;
 
   const row2 = `<div style="${gridStyle}margin-top:4px;">
-    <div></div>
-    <div></div>
+    <div></div><div></div>
     <div style="position:relative;">
       <div style="text-align:center;font-size:9px;color:#0F6E56;margin-bottom:3px;">${Math.round(CV.obToRS*100)}% → RS</div>
       <div style="text-align:center;font-size:14px;color:#0F6E56;line-height:1;margin-bottom:4px;">↑</div>
       <div class="hbox" style="background:#E1F5EE;border:1px solid #0F6E5680;">
         <div class="hlbl" style="color:#0F6E56;">Outbound Leads</div>
-        ${vId === 'em' ? (() => {
-          const factInboundPW = +(256/34).toFixed(1);
-          const factRSfromInbound = +(factInboundPW * CV.appToRS).toFixed(1);
-          const gapRS = Math.max(0, +(kpiRS - factRSfromInbound).toFixed(1));
-          const neededOb = gapRS > 0 ? Math.ceil(gapRS / CV.obToRS) : 0;
-          const gapCol = gapRS > 0 ? '#E24B4A' : '#0F6E56';
-          return `<div style="font-size:20px;font-weight:500;color:#0F6E56;text-align:center;margin:4px 0;">${neededOb}<span style="font-size:11px;opacity:.7;"> /тиж</span></div>
-          <div class="hsub" style="color:#0F6E56;">→ ${+(neededOb*CV.obToRS).toFixed(1)} RS дзвінків</div>
-          <div style="font-size:9px;margin-top:4px;color:${gapCol};">gap RS: ${factRSfromInbound}/тиж inbound → потрібно +${gapRS} RS</div>`;
-        })() : `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0;">
           <input type="number" min="0" max="200" value="${CV.obLeads}"
             style="width:56px;font-size:20px;font-weight:500;color:#0F6E56;border:none;border-bottom:1.5px solid #0F6E5680;background:transparent;text-align:center;outline:none;"
             oninput="VACANCIES['${vId}'].CV.obLeads=Math.max(0,+this.value||0);render('${vId}');">
           <span style="font-size:11px;color:#0F6E56;opacity:.7;">/тиж</span>
         </div>
-        <div class="hsub" style="color:#0F6E56;">→ ${obRS} RS дзвінків</div>`}
+        <div class="hsub" style="color:#0F6E56;">→ ${obRS} RS дзвінків</div>
+        ${obRS > 0 ? `<div style="font-size:9px;margin-top:4px;color:#0F6E56;">App Review −${Math.ceil(obRS/CV.appToRS)}/тиж (outbound покриває)</div>` : '<div style="font-size:9px;margin-top:4px;color:#9b9b96;">введи outbound → зменшить App Review</div>'}
       </div>
     </div>
     <div></div><div></div><div></div>
@@ -876,14 +857,12 @@ function render(vId) {
 
   tfEl.innerHTML = row1 + row2;
 
-  // Fact funnel (only for pa)
   if (vId === 'pa') {
-    const tgtApp2wk = Math.round(kpiAppAdjusted * (v.deadlineWeeks || 8)); // таргет за весь дедлайн
+    const tgtApp2wk = Math.round(kpiAppAdjusted * (v.deadlineWeeks || 8));
     const appPct = Math.min(100, Math.round(v.inbound/tgtApp2wk*100));
     const appC = appPct>=100?'#0F6E56':appPct>=70?'#BA7517':'#E24B4A';
     document.getElementById('inPct149-pa').innerHTML = `<span style="color:${appC};">${appPct}% від таргету (${tgtApp2wk})</span>`;
 
-    // Outbound flow — динамічно зі стейту
     const ob = v.outbound || {};
     const obNewLead   = ob.newLead   || (v.factsAccum||{}).leads || 0;
     const obReached   = ob.reachedOut || 0;
@@ -891,37 +870,25 @@ function render(vId) {
     const obArchived  = ob.archived   || 0;
     const reachedPct  = obNewLead > 0 ? Math.round(obReached / obNewLead * 100) : 0;
     const repliedPct  = obReached > 0 ? Math.round(obReplied / obReached * 100) : 0;
-    const obRS        = (v.factsAccum||{}).rsFromOb || 0;
+    const obRSfact    = (v.factsAccum||{}).rsFromOb || 0;
     document.getElementById('outboundFlow-pa').innerHTML = `
-      <div class="s-node">
-        <div class="s-lbl" style="color:#0F6E56;">New Lead</div>
-        <div class="s-val" style="color:#0F6E56;">${obNewLead}</div>
-        <div class="s-sub" style="color:#6b6b67;">всього лідів</div>
-      </div>
+      <div class="s-node"><div class="s-lbl" style="color:#0F6E56;">New Lead</div><div class="s-val" style="color:#0F6E56;">${obNewLead}</div><div class="s-sub" style="color:#6b6b67;">всього лідів</div></div>
       <div class="s-arr">→</div>
-      <div class="s-node">
-        <div class="s-lbl" style="color:#0F6E56;">Reached Out</div>
-        <div class="s-val" style="color:#0F6E56;">${obReached}</div>
-        <div class="s-sub" style="color:#6b6b67;">${reachedPct}%</div>
-      </div>
+      <div class="s-node"><div class="s-lbl" style="color:#0F6E56;">Reached Out</div><div class="s-val" style="color:#0F6E56;">${obReached}</div><div class="s-sub" style="color:#6b6b67;">${reachedPct}%</div></div>
       <div class="s-arr">→</div>
-      <div class="s-node">
-        <div class="s-lbl" style="color:#0F6E56;">Replied</div>
-        <div class="s-val" style="color:#0F6E56;">${obReplied}</div>
-        <div class="s-sub" style="color:#6b6b67;">${repliedPct}%</div>
-      </div>
+      <div class="s-node"><div class="s-lbl" style="color:#0F6E56;">Replied</div><div class="s-val" style="color:#0F6E56;">${obReplied}</div><div class="s-sub" style="color:#6b6b67;">${repliedPct}%</div></div>
       <div class="s-arr">→</div>
       <div style="font-size:11px;line-height:1.8;">
-        ${obRS > 0 ? `<div style="color:#0F6E56;">● ${obRS} RS</div>` : ''}
+        ${obRSfact > 0 ? `<div style="color:#0F6E56;">● ${obRSfact} RS</div>` : ''}
         ${obArchived > 0 ? `<div style="color:#E24B4A;">✕ ${obArchived} archived</div>` : ''}
-        <div style="font-size:9px;color:#9b9b96;margin-top:3px;">${obRS === 0 ? 'жоден не дійшов до RS' : ''}</div>
+        <div style="font-size:9px;color:#9b9b96;margin-top:3px;">${obRSfact === 0 ? 'жоден не дійшов до RS' : ''}</div>
       </div>`;
 
     const sfn = [
-      {lbl:'RS',            val:(v.factsAccum||{}).rs||0, tgt:Math.round(kpiRS*v.weeksOpen),  bg:'#EEEDFE', bc:'#534AB780', tc:'#534AB7'},
-      {lbl:'CV Review',     val:(v.factsAccum||{}).cv||0, tgt:Math.round(kpiCV*v.weeksOpen),  bg:'#E1F5EE', bc:'#0F6E5680', tc:'#0F6E56'},
-      {lbl:'Tech Interview', val:(v.factsAccum||{}).ti||0, tgt:Math.round(kpiTI*v.weeksOpen), bg:'#FFF9E6', bc:'#BA751780', tc:'#BA7517'},
-      {lbl:'Hired',          val:0,                        tgt:0,                              bg:'#EAF3DE', bc:'#3B6D1180', tc:'#27500A'},
+      {lbl:'RS',             val:(v.factsAccum||{}).rs||0, tgt:Math.round(kpiRS*v.weeksOpen),  bg:'#EEEDFE', bc:'#534AB780', tc:'#534AB7'},
+      {lbl:'CV Review',      val:(v.factsAccum||{}).cv||0, tgt:Math.round(kpiCV*v.weeksOpen),  bg:'#E1F5EE', bc:'#0F6E5680', tc:'#0F6E56'},
+      {lbl:'Tech Interview', val:(v.factsAccum||{}).ti||0, tgt:Math.round(kpiTI*v.weeksOpen),  bg:'#FFF9E6', bc:'#BA751780', tc:'#BA7517'},
+      {lbl:'Hired',          val:0,                         tgt:0,                              bg:'#EAF3DE', bc:'#3B6D1180', tc:'#27500A'},
     ];
     let sf = '';
     sfn.forEach((n,i) => {
@@ -936,7 +903,6 @@ function render(vId) {
     });
     document.getElementById('factFunnel149-pa').innerHTML = sf;
 
-    // Progress
     const ap = Math.min(100, Math.round(v.inbound/tgtApp2wk*100));
     const tp = Math.round(v.weeksOpen/(v.weeksOpen+weeksLeft)*100);
     document.getElementById('currProg-pa').innerHTML = `
@@ -950,7 +916,7 @@ function render(vId) {
           const gapRS2 = Math.max(0, +(kpiRS - factRSpw2).toFixed(1));
           const obLeadsTgtPW = gapRS2 > 0 ? Math.ceil(gapRS2 / CV.obToRS) : 0;
           const dl = v.deadlineWeeks || 8;
-          const obLeadsTgtTotal = obLeadsTgtPW * dl; // загальний таргет за весь дедлайн
+          const obLeadsTgtTotal = obLeadsTgtPW * dl;
           const obLeadsFact = (v.factsAccum||{}).leads||0;
           const obPct = obLeadsTgtTotal > 0 ? Math.min(100, Math.round(obLeadsFact / obLeadsTgtTotal * 100)) : 0;
           const obCol = obPct >= 100 ? '#0F6E56' : obPct >= 60 ? '#BA7517' : '#E24B4A';
@@ -963,13 +929,11 @@ function render(vId) {
         <div class="prog-wrap"><div class="prog-bar" style="width:${tp}%;background:#185FA5;"></div></div>
       </div>`;
 
-    // Signals
     const currPW = +(v.inbound/v.weeksOpen).toFixed(1);
     const inboundDiff = kpiAppAdjusted > 0 ? (currPW - kpiAppAdjusted) / kpiAppAdjusted : 0;
-    const inboundOk = inboundDiff >= -0.10; // менше 10% відхилення → ок
+    const inboundOk = inboundDiff >= -0.10;
     const inboundWarn = inboundDiff >= -0.30 && !inboundOk;
 
-    // Прогноз закриття при поточному темпі
     const projRSpw = +(currPW * CV.appToRS).toFixed(2);
     const projCVpw = +(projRSpw * CV.rsToCV).toFixed(2);
     const projTIpw = +(projCVpw * CV.cvToTI).toFixed(2);
@@ -977,7 +941,6 @@ function render(vId) {
     const weeksRemaining = (v.deadlineWeeks || 8) - v.weeksOpen;
     const closureOk = weeksToClose <= weeksRemaining;
 
-    // App→RS конверсія динамічно
     const factAppToRS = v.inbound > 0 ? Math.round((v.factsAccum||{}).rs / v.inbound * 100) : 0;
     const appToRSbench = 25;
     const appToRSOk = factAppToRS >= appToRSbench;
@@ -1013,7 +976,6 @@ function render(vId) {
       return `<div class="sig ${cls}"><div class="sdot ${dot}"></div><div class="sig-body"><div class="sig-ttl">${s.ttl}</div>${s.det?`<div class="sig-det">${s.det}</div>`:''}</div></div>`;
     }).join('');
 
-    // Advice — динамічно з factsAccum
     const factRS = (v.factsAccum||{}).rs || 0;
     const factCV = (v.factsAccum||{}).cv || 0;
     const factTI = (v.factsAccum||{}).ti || 0;
@@ -1024,20 +986,17 @@ function render(vId) {
     const advs = [
       {stage:`App Review → RS (${convAppRS}% · бенчмарк: 20–40%)`,
        status: convAppRS >= 20 ? 'ok' : 'bad',
-       text: convAppRS >= 20
-         ? `Конверсія ${convAppRS}% — в нормі.`
+       text: convAppRS >= 20 ? `Конверсія ${convAppRS}% — в нормі.`
          : `${convAppRS}% — нижче бенчмарку 20–40%. ${v.inbound - factRS} кандидатів відхилено на App Review.`,
        tips:['Перевір JD — чи відповідає реальним кандидатам','Переглянь критерії скорингу','Порівняй з базою #38: 35%']},
       {stage:`RS → CV Review (${convRSCV !== null ? convRSCV+'%' : 'немає даних'} · бенчмарк: 70%)`,
        status: convRSCV === null ? 'warn' : convRSCV >= 70 ? 'ok' : 'warn',
-       text: convRSCV === null
-         ? `Мало даних — лише ${factRS} RS проведено.`
+       text: convRSCV === null ? `Мало даних — лише ${factRS} RS проведено.`
          : `${convRSCV}% — ${convRSCV >= 70 ? 'в нормі' : 'нижче бенчмарку 70%'}.`,
        tips:['Мінімум 5–10 RS для надійної статистики']},
       {stage:`CV Review → TI (${convCVTI !== null ? convCVTI+'%' : 'немає даних'} · бенчмарк: 60%)`,
        status: convCVTI === null ? 'warn' : convCVTI >= 60 ? 'ok' : 'warn',
-       text: convCVTI === null
-         ? 'Даних немає — жодного CV Review ще не було.'
+       text: convCVTI === null ? 'Даних немає — жодного CV Review ще не було.'
          : `${convCVTI}% — ${convCVTI >= 60 ? 'в нормі' : 'нижче бенчмарку 60%'}.`,
        tips:['Фокус зараз — довести перші RS до CV Review']},
     ];
@@ -1051,13 +1010,10 @@ function render(vId) {
     }).join('');
   }
 
-  // KPI table
-  // Sourcing KPI: таргет = те що введено в таргет воронці (obLeads)
-  // План = obLeads + недобір inbound (компенсація)
   const factRSpw = +(v.inbound / v.weeksOpen * CV.appToRS).toFixed(1);
   const gapRS = Math.max(0, +(kpiRS - factRSpw).toFixed(1));
   const obLeadsNeeded = Math.ceil(gapRS / CV.obToRS);
-  const kpiLeads = CV.obLeads || 0; // таргет з таргет воронки
+  const kpiLeads = CV.obLeads || 0;
 
   const kpis = [
     {who:'Comms',         kpi:kpiAppAdjusted, metric:'App Review / тиж',    fk:'comms',  col:'#185FA5'},
@@ -1067,46 +1023,35 @@ function render(vId) {
   ];
   document.getElementById(`kpiBody-${vId}`).innerHTML = kpis.map(r=>{
     const f = v.facts[r.fk] ?? 0;
-    // Накопичений борг = таргет × тижнів - накопичений факт за весь час
     const fAccum = (v.factsAccum || {})[r.fk] ?? 0;
     const tgtTotal = +(r.kpi * v.weeksOpen).toFixed(1);
     const cumulativeDebt = Math.max(0, +(tgtTotal - fAccum).toFixed(1));
     const shortfall = cumulativeDebt;
     const planBase = r.fk === 'leads' ? r.kpi + obLeadsNeeded + shortfall : r.kpi + shortfall;
     const plan = +planBase.toFixed(1);
-    const planCol = shortfall > 0 || (r.fk === 'leads' && obLeadsNeeded > 0) ? '#E24B4A' : '#0F6E56';
     const f2 = (v.facts2 || {})[r.fk] ?? 0;
-    const factCell  = `<td style="text-align:center;font-size:14px;font-weight:500;color:#1a1a18;">${f}</td>`;
-    const planCell  = `<td style="text-align:center;font-size:14px;font-weight:500;color:#1a1a18;">${plan}${shortfall>0?` <span style="font-size:10px;color:#E24B4A;">(+${shortfall} борг)</span>`:''}</td>`;
     const fact2Color = f2 > 0 ? (f2 >= plan ? '#0F6E56' : '#1a1a18') : '#9b9b96';
-    const fact2Cell = `<td style="text-align:center;font-size:14px;font-weight:500;color:${fact2Color};">${f2 > 0 ? f2 : '—'}</td>`;
     return `<tr>
       <td><b>${r.who}</b></td>
       <td class="kn" style="color:${r.col};">${r.kpi}</td>
       <td style="color:#6b6b67;">${r.metric}</td>
-      ${factCell}
+      <td style="text-align:center;font-size:14px;font-weight:500;">${f}</td>
       ${vId === 'em' ? `<td style="text-align:center;"><span class="badge ${f===0?'bna':+(f/r.kpi)>=1?'bok':+(f/r.kpi)>=0.7?'bwarn':'bbad'}">${f===0?'—':+(f/r.kpi)>=1?'Виконано':+(f/r.kpi)>=0.7?'Відстає':'Критично'}</span></td>` : ''}
-      ${planCell}
-      ${fact2Cell}
+      <td style="text-align:center;font-size:14px;font-weight:500;">${plan}${shortfall>0?` <span style="font-size:10px;color:#E24B4A;">(+${shortfall} борг)</span>`:''}</td>
+      <td style="text-align:center;font-size:14px;font-weight:500;color:${fact2Color};">${f2 > 0 ? f2 : '—'}</td>
     </tr>`;
   }).join('');
 
-  // Forecast
   const fcEl = document.getElementById(`closeForecast-${vId}`);
   if (fcEl) {
     if (vId === 'em') {
-      // Факт по воронці — з стейту
       const haveApp = v.inbound;
       const haveRS  = (v.factsAccum||{}).rs||0;
       const haveCV  = (v.factsAccum||{}).cv||0;
       const haveTI  = (v.factsAccum||{}).ti||0;
-      const haveHired = 0;
-      const factTItoHire = haveHired > 0 ? (haveHired / haveTI * 100).toFixed(1) : 0;
       const expectedHires = Math.round(haveTI * CV.tiToHire);
       const factTIpw = +(haveTI / 34).toFixed(2);
-
-      // Що потрібно для закриття
-      const needTI  = Math.ceil(1 / CV.tiToHire);
+      const needTI  = CV.tiToHire > 0 ? Math.ceil(1 / CV.tiToHire) : 99;
       const needCV  = Math.ceil(needTI / CV.cvToTI);
       const needRS  = Math.ceil(needCV / CV.rsToCV);
       const needApp = Math.ceil(needRS / CV.appToRS);
@@ -1123,49 +1068,27 @@ function render(vId) {
       fcEl.innerHTML = `
         <div style="font-size:11px;font-weight:500;color:#9b9b96;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;">Підсумок по воронці</div>
         ${row('App Review → RS → CV → TI', `${haveApp} → ${haveRS} → ${haveCV} → ${haveTI}`, '#1a1a18')}
-        ${row('Hires', haveHired, '#E24B4A', `з ${haveTI} TI`)}
-        ${row('Фактична конверсія TI → Hire', factTItoHire+'%', '#E24B4A', `(бенчмарк ${Math.round(CV.tiToHire*100)}%)`)}
-        ${row('Якби був 1 hire', (1/haveTI*100).toFixed(1)+'%', '#BA7517', `— нижче бенчмарку ${Math.round(CV.tiToHire*100)}%`)}
+        ${row('Hires', 0, '#E24B4A', `з ${haveTI} TI`)}
         <div style="margin-top:8px;padding:8px 10px;background:#FCEBEB;border-radius:8px;font-size:11px;color:#791F1F;">
           При бенчмарку ${Math.round(CV.tiToHire*100)}% з ${haveTI} TI мало б бути ~${expectedHires} hire. Фактично — 0.
         </div>
-
         <div style="font-size:11px;font-weight:500;color:#9b9b96;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 8px;padding-top:14px;border-top:0.5px solid rgba(0,0,0,.08);">Що потрібно для закриття</div>
-        <div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:0;padding:4px 0 6px;border-bottom:0.5px solid rgba(0,0,0,.1);">
-          <span style="font-size:10px;font-weight:500;color:#9b9b96;text-transform:uppercase;">Етап</span>
-          <span style="font-size:10px;font-weight:500;color:#9b9b96;text-transform:uppercase;text-align:center;">Потрібно</span>
-          <span style="font-size:10px;font-weight:500;color:#9b9b96;text-transform:uppercase;text-align:center;">Є</span>
-          <span style="font-size:10px;font-weight:500;color:#9b9b96;text-transform:uppercase;text-align:center;">Дельта</span>
-        </div>
-        ${[
-          ['App Review', needApp, haveApp, '#185FA5'],
-          ['RS дзвінків', needRS, haveRS, '#534AB7'],
-          ['CV Review', needCV, haveCV, '#0F6E56'],
-          ['Tech Interview', needTI, haveTI, '#BA7517'],
-        ].map(([lbl, need, have, col]) => {
+        ${[['App Review', needApp, haveApp, '#185FA5'],['RS дзвінків', needRS, haveRS, '#534AB7'],['CV Review', needCV, haveCV, '#0F6E56'],['Tech Interview', needTI, haveTI, '#BA7517']].map(([lbl, need, have, col]) => {
           const more = Math.max(0, need - have);
-          const dCol = more === 0 ? '#0F6E56' : '#E24B4A';
           return `<div style="display:grid;grid-template-columns:1fr 60px 60px 70px;gap:0;padding:6px 0;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px;align-items:center;">
             <span style="color:#6b6b67;">${lbl}</span>
             <span style="font-weight:500;color:${col};text-align:center;">${need}</span>
             <span style="color:#1a1a18;text-align:center;">${have}</span>
-            <span style="font-weight:500;color:${dCol};text-align:center;">${more > 0 ? '+'+more : '✓'}</span>
+            <span style="font-weight:500;color:${more > 0 ? '#E24B4A' : '#0F6E56'};text-align:center;">${more > 0 ? '+'+more : '✓'}</span>
           </div>`;
         }).join('')}
         <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;">
           ${moreTI > 0
-            ? `<div style="padding:8px 10px;background:#FFF9E6;border-radius:8px;font-size:12px;">
-                <span style="font-weight:500;color:#633806;">При поточному темпі (${factTIpw} TI/тиж) — ще ~${wksAtPace} тиж</span>
-               </div>
-               <div style="padding:8px 10px;background:#E6F1FB;border-radius:8px;font-size:12px;">
-                <span style="font-weight:500;color:#0C447C;">При плановому темпі (${kpiTI} TI/тиж) — ще ~${wksAtPlan} тиж</span>
-               </div>`
-            : `<div style="padding:8px 10px;background:#EAF3DE;border-radius:8px;font-size:12px;font-weight:500;color:#27500A;">
-                ✓ Достатньо TI проведено — питання в конверсії TI→Hire
-               </div>`}
+            ? `<div style="padding:8px 10px;background:#FFF9E6;border-radius:8px;font-size:12px;font-weight:500;color:#633806;">При поточному темпі (${factTIpw} TI/тиж) — ще ~${wksAtPace} тиж</div>
+               <div style="padding:8px 10px;background:#E6F1FB;border-radius:8px;font-size:12px;font-weight:500;color:#0C447C;">При плановому темпі (${kpiTI} TI/тиж) — ще ~${wksAtPlan} тиж</div>`
+            : `<div style="padding:8px 10px;background:#EAF3DE;border-radius:8px;font-size:12px;font-weight:500;color:#27500A;">✓ Достатньо TI проведено — питання в конверсії TI→Hire</div>`}
         </div>`;
     } else {
-      // PA прогноз — від kpiAppAdjusted (таргет з урахуванням outbound)
       const projNewApp = Math.round(kpiAppAdjusted * weeksLeft);
       const projApp = v.inbound + projNewApp;
       const projRS  = Math.round(projApp * CV.appToRS);
@@ -1174,48 +1097,163 @@ function render(vId) {
       const hC      = hireP>60?'#0F6E56':hireP>30?'#BA7517':'#E24B4A';
       fcEl.innerHTML = `
         <div style="font-size:11px;color:#6b6b67;margin-bottom:8px;">При дотриманні KPI за ${Math.round(weeksLeft)} тиж що залишились:</div>
-        ${[
-          ['Нових App Review', projNewApp, '#185FA5'],
-          ['Всього App Review', projApp, '#185FA5'],
-          ['Прогноз RS дзвінків', projRS, '#534AB7'],
-          ['Прогноз Tech Interviews', projTI, '#BA7517'],
-          ['Ймовірність hire до дедлайну', hireP+'%', hC],
-        ].map(([l,val,col])=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px;"><span style="color:#6b6b67;">${l}</span><span style="font-weight:500;color:${col};">${val}</span></div>`).join('')}
+        ${[['Нових App Review', projNewApp, '#185FA5'],['Всього App Review', projApp, '#185FA5'],['Прогноз RS дзвінків', projRS, '#534AB7'],['Прогноз Tech Interviews', projTI, '#BA7517'],['Ймовірність hire до дедлайну', hireP+'%', hC]].map(([l,val,col])=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(0,0,0,.06);font-size:12px;"><span style="color:#6b6b67;">${l}</span><span style="font-weight:500;color:${col};">${val}</span></div>`).join('')}
         <div style="margin-top:10px;padding:8px 10px;background:${onTrack?'#EAF3DE':'#FCEBEB'};border-radius:8px;font-size:12px;font-weight:500;color:${onTrack?'#27500A':'#791F1F'};">
           ${onTrack?'Вкладається в дедлайн при поточному пріоритеті':'Ризик не встигнути — підвищ пріоритет або додай outbound'}
         </div>`;
     }
   }
 
-  // EM-specific signals
-  // EM-specific: Plan vs Fact
   if (vId === 'em' || vId === 'pa') {
-    renderPvF(kpiTI, kpiRS, kpiCV, vId === 'pa' ? kpiAppAdjusted : kpiApp, v, daysLeft);
-    document.getElementById('signals-em').innerHTML = `
-      <div class="sig s-bad"><div class="sdot dbad"></div><div class="sig-body">
-        <div class="sig-ttl">Воронка порожня — 0 активних кандидатів станом на 11 квіт. 2026</div>
-        <div class="sig-det">Останні рухи 10 квітня: 2 архівування (1 відмова кандидата, 1 відхилення орг). Потрібен активний перезапуск.</div>
-      </div></div>
-      <div class="sig s-bad"><div class="sdot dbad"></div><div class="sig-body">
-        <div class="sig-ttl">Вакансія відкрита 34 тижні — 0 hires за весь час</div>
-        <div class="sig-det">8 місяців без результату. Критично переглянути вимоги, JD або підхід до пошуку.</div>
-      </div></div>
-      <div class="sig s-bad"><div class="sdot dbad"></div><div class="sig-body">
-        <div class="sig-ttl">App Review → RS: лише 20% (197 з 256 відсіяно на вході)</div>
-        <div class="sig-det">Майже 4 з 5 кандидатів відпадають на Application Review. Перевір відповідність JD реальним кандидатам на ринку.</div>
-      </div></div>
-      <div class="sig s-ok"><div class="sdot dok"></div><div class="sig-body">
-        <div class="sig-ttl">CV Review → TI: 77% — сильна ланка</div>
-        <div class="sig-det">З 35 кандидатів на CV Review до TI дійшло 27. Критерії відбору на цьому етапі працюють добре.</div>
-      </div></div>
-      <div class="sig s-warn"><div class="sdot dwarn"></div><div class="sig-body">
-        <div class="sig-ttl">Outbound = 0 — весь трафік inbound (DOU 38%, Instagram 11%)</div>
-        <div class="sig-det">Нульовий активний соурсинг за 8 місяців. Додавання outbound може суттєво змінити ситуацію.</div>
+    renderPvF(kpiTI, kpiRS, kpiCV, kpiAppAdjusted, v, daysLeft);
+  }
+
+  // Ініціалізуємо слайдери EM лише один раз — щоб не скидати ручні зміни
+  if (vId === 'em' && v.factsAccum && !v._slidersInit) {
+    v._slidersInit = true;
+    const fa = v.factsAccum;
+    const factAppRS = fa.comms > 0 ? Math.round(fa.rs / fa.comms * 100) : null;
+    if (factAppRS !== null) {
+      CV.appToRS = factAppRS / 100;
+      const el = document.getElementById('sv-appToRS-em');
+      const inp = el?.closest('.slider-item')?.querySelector('input');
+      if (el) el.textContent = factAppRS + '%';
+      if (inp) inp.value = factAppRS;
+    }
+  }
+
+  if (vId === 'em') {
+    const emArchived = v.inbound - ((v.factsAccum||{}).rs||0);
+    document.getElementById('inboundFlow-em').innerHTML = `
+      <div class="s-node"><div class="s-lbl" style="color:#185FA5;">App Review</div><div class="s-val" style="color:#185FA5;">${v.inbound}</div><div class="s-sub" style="color:#6b6b67;">всього inbound</div></div>
+      <div class="s-arr">→</div>
+      <div style="font-size:11px;line-height:1.8;">
+        <div style="color:#185FA5;">● ${(v.factsAccum||{}).rs||0} passed (RS)</div>
+        <div style="color:#E24B4A;">✕ ${emArchived} archived</div>
+        <div style="font-size:9px;color:#9b9b96;margin-top:3px;">конверсія App→RS: ${Math.round(((v.factsAccum||{}).rs||0)/v.inbound*100)}%</div>
+      </div>`;
+
+    // Outbound flow — EM (аналогічно PA)
+    const emOb = v.outbound || {};
+    const emObNewLead  = emOb.newLead   || 0;
+    const emObReached  = emOb.reachedOut || 0;
+    const emObReplied  = emOb.replied    || 0;
+    const emObArchived = emOb.archived   || 0;
+    const emObRSfact   = emOb.rsFromOb  || 0;
+    const emReachedPct = emObNewLead > 0 ? Math.round(emObReached / emObNewLead * 100) : 0;
+    const emRepliedPct = emObReached > 0 ? Math.round(emObReplied / emObReached * 100) : 0;
+    document.getElementById('outboundFlow-em').innerHTML = emObNewLead === 0
+      ? `<div style="font-size:12px;color:#9b9b96;padding:4px 0;">Outbound не ведеться<br><span style="font-size:10px;">Заповни дані коли запустите соурсинг</span></div>`
+      : `<div class="s-node"><div class="s-lbl" style="color:#0F6E56;">New Lead</div><div class="s-val" style="color:#0F6E56;">${emObNewLead}</div><div class="s-sub" style="color:#6b6b67;">всього лідів</div></div>
+      <div class="s-arr">→</div>
+      <div class="s-node"><div class="s-lbl" style="color:#0F6E56;">Reached Out</div><div class="s-val" style="color:#0F6E56;">${emObReached}</div><div class="s-sub" style="color:#6b6b67;">${emReachedPct}%</div></div>
+      <div class="s-arr">→</div>
+      <div class="s-node"><div class="s-lbl" style="color:#0F6E56;">Replied</div><div class="s-val" style="color:#0F6E56;">${emObReplied}</div><div class="s-sub" style="color:#6b6b67;">${emRepliedPct}%</div></div>
+      <div class="s-arr">→</div>
+      <div style="font-size:11px;line-height:1.8;">
+        ${emObRSfact > 0 ? `<div style="color:#0F6E56;">● ${emObRSfact} RS</div>` : ''}
+        ${emObArchived > 0 ? `<div style="color:#E24B4A;">✕ ${emObArchived} archived</div>` : ''}
+        <div style="font-size:9px;color:#9b9b96;margin-top:3px;">${emObRSfact === 0 ? 'жоден не дійшов до RS' : ''}</div>
+      </div>`;
+
+    const emObRSforMerge = (v.outbound||{}).rsFromOb || 0;
+    const emTotalRS = ((v.factsAccum||{}).rs||0);
+    document.getElementById('emMerge').innerHTML = emObRSforMerge > 0
+      ? `злиття на Recruitment Screening · RS: <b>${emTotalRS - emObRSforMerge}</b> inbound + <b>${emObRSforMerge}</b> outbound = <b>${emTotalRS}</b>`
+      : `злиття на Recruitment Screening · RS досягнуто: <b>${emTotalRS}</b> (inbound)`;
+
+    // Для EM: таргет = скільки потрібно для 1 hire
+    // TI→Hire: бенчмарк 10% (факт = 0, тому використовуємо бенчмарк)
+    // Конверсії — реальні з factsAccum (CSV)
+    const emFa = v.factsAccum || {};
+    const emBenchTiToHire = 0.10;
+    // Реальні конверсії між стейджами
+    const emConvRSCV  = emFa.rs > 0 ? emFa.cv / emFa.rs : CV.rsToCV;
+    // CV→TI: з CSV 19 прямих переходів з 26 CV = 73% (TI може бути > CV бо деякі йдуть в TI з інших стейджів)
+    const emConvCVTI  = 19 / 26;  // 0.73 — факт з CSV (CV Review → Tech Interview прямо)
+    const emConvAppRS = emFa.comms > 0 ? emFa.rs / emFa.comms : CV.appToRS;
+    // Зворотній розрахунок: скільки потрібно для 1 hire
+    const emNeedTI = Math.ceil(1 / emBenchTiToHire);                    // 10
+    const emNeedCV = Math.ceil(emNeedTI / Math.max(emConvCVTI, 0.01));  // 14
+    const emNeedRS = Math.ceil(emNeedCV / Math.max(emConvRSCV, 0.01));  // 26
+    // % покриття: факт / потрібно
+    const emConvRSCVpct   = emFa.rs > 0 ? Math.round(emFa.cv / emFa.rs * 100) : 0;  // 53%
+    const emConvCVTIpct   = Math.round(19 / 26 * 100);  // 73% — пряма з CSV
+    const emConvTIHirepct = Math.round(emBenchTiToHire * 100);  // 10% — бенчмарк
+    const emSfn = [
+      {lbl:'RS',             val:emFa.rs||0,  tgt:emNeedRS,  bg:'#EEEDFE', bc:'#534AB780', tc:'#534AB7', conv:null},
+      {lbl:'CV Review',      val:emFa.cv||0,  tgt:emNeedCV,  bg:'#E1F5EE', bc:'#0F6E5680', tc:'#0F6E56', conv:emConvRSCVpct},
+      {lbl:'Tech Interview', val:emFa.ti||0,  tgt:emNeedTI,  bg:'#FFF9E6', bc:'#BA751780', tc:'#BA7517', conv:emConvCVTIpct},
+      {lbl:'Hired',          val:0,            tgt:0,         bg:'#EAF3DE', bc:'#3B6D1180', tc:'#27500A', conv:emConvTIHirepct},
+    ];
+    let emSf = '';
+    emSfn.forEach((n,i) => {
+      // % від потрібного: може бути >100% (перевиконано)
+      const pp = n.tgt>0 ? Math.round(n.val/n.tgt*100) : null;
+      const pc = pp==null ? '#9b9b96' : pp>=100 ? '#0F6E56' : pp>=70 ? '#BA7517' : '#E24B4A';
+      const subLbl = n.tgt>0
+        ? `${pp}% від потрібного (${Math.round(n.tgt)})`
+        : (n.lbl==='Hired'?'відкрита':'—');
+      emSf += `<div class="hnode"><div class="hbox" style="background:${n.bg};border:1px solid ${n.bc};min-width:90px;">
+        <div class="hlbl" style="color:${n.tc};">${n.lbl}</div>
+        <div class="hval" style="color:${n.tc};">${n.val}</div>
+        <div class="pct-tag" style="color:${n.tgt>0?pc:'#9b9b96'};">${subLbl}</div>
       </div></div>`;
+      if (i < emSfn.length - 1) {
+        // Конверсія між стейджами — факт з CSV, вже в emSfn[i+1].conv
+        const convPct = emSfn[i+1].conv;
+        const convCol = convPct !== null ? (convPct >= 70 ? '#0F6E56' : convPct >= 40 ? '#BA7517' : '#E24B4A') : '#9b9b96';
+        emSf += arrow(convPct !== null ? convPct + '%' : '—%', convCol);
+      }
+    });
+    document.getElementById('factFunnel149-em').innerHTML = emSf;
+
+    const tiNextBench = 50;
+    const tiNextFact  = (v.factsAccum||{}).tiNext || 0;
+    const tiTotalForNext = (v.factsAccum||{}).ti || 1;
+    const tiNextPct   = Math.round(tiNextFact / tiTotalForNext * 100);
+    const tiNextCol   = tiNextPct >= tiNextBench ? '#0F6E56' : '#E24B4A';
+    document.getElementById('factFunnel149-em').innerHTML += `
+      <div style="margin-top:12px;padding:10px 12px;background:#F5F4F0;border-radius:8px;font-size:12px;">
+        <span style="font-weight:500;color:#6b6b67;">TI → Next Stage:</span>
+        <span style="font-weight:500;color:${tiNextCol};margin-left:6px;">${tiNextPct}%</span>
+        <span style="color:#9b9b96;margin-left:4px;">(${tiNextFact} з ${tiTotalForNext} · бенчмарк ${tiNextBench}%)</span>
+        ${tiNextPct < tiNextBench ? `<div style="margin-top:4px;font-size:11px;color:#791F1F;">⚠️ Нижче бенчмарку — sync рекрутер + HM по критеріях оцінки TI</div>` : ''}
+      </div>`;
+
+    const emTgtApp = Math.round(kpiAppAdjusted * v.weeksOpen);
+    const emAppPct = emTgtApp > 0 ? Math.min(100, Math.round(v.inbound/emTgtApp*100)) : 0;
+    const emAppC   = emAppPct>=100?'#0F6E56':emAppPct>=70?'#BA7517':'#E24B4A';
+    document.getElementById('currProg-em').innerHTML = `
+      <div class="prog-row">
+        <div class="prog-lbl"><span>Inbound накопичено</span><span style="color:${emAppC};">${v.inbound} з ${emTgtApp}</span></div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:${emAppPct}%;background:${emAppC};"></div></div>
+      </div>
+      <div class="prog-row" style="margin-top:8px;">
+        <div class="prog-lbl"><span>Час</span><span>${v.weeksOpen} тиж відкрита · дедлайн не встановлено</span></div>
+        <div class="prog-wrap"><div class="prog-bar" style="width:${Math.min(100,Math.round(v.weeksOpen/(v.weeksOpen+4)*100))}%;background:#185FA5;"></div></div>
+      </div>`;
+
+    document.getElementById('signals-em').innerHTML = `
+      <div class="sig s-bad"><div class="sdot dbad"></div><div class="sig-body"><div class="sig-ttl">Вакансія відкрита 34 тижні — 0 hires за весь час</div><div class="sig-det">8 місяців без результату. 1 активний кандидат на TI. Критично довести поточного кандидата до оферу.</div></div></div>
+      <div class="sig s-warn"><div class="sdot dwarn"></div><div class="sig-body"><div class="sig-ttl">App Review → RS: ${Math.round(((v.factsAccum||{}).rs||0)/v.inbound*100)}% (${v.inbound - ((v.factsAccum||{}).rs||0)} з ${v.inbound} відсіяно на вході)</div><div class="sig-det">Майже 4 з 5 кандидатів відпадають на Application Review. Перевір відповідність JD реальним кандидатам на ринку.</div></div></div>
+      <div class="sig s-ok"><div class="sdot dok"></div><div class="sig-body"><div class="sig-ttl">CV Review → TI: 93% — сильна ланка (36→27 з Test Sent/Done)</div><div class="sig-det">Критерії відбору після RS працюють добре. Вузьке місце — вхід у воронку та TI→Final Interview (19%).</div></div></div>
+      <div class="sig s-bad"><div class="sdot dbad"></div><div class="sig-body"><div class="sig-ttl">TI → Final Interview: 19% (5 з 27) — критично нижче бенчмарку 50%</div><div class="sig-det">22 кандидати відпали після TI. Потрібна синхронізація рекрутера і HM по критеріях оцінки на TI.</div></div></div>
+      ${(() => {
+        const emObSig = v.outbound || {};
+        const emObLeadsSig = emObSig.newLead || 0;
+        const emObRSSig = emObSig.rsFromOb || 0;
+        if (emObLeadsSig === 0) {
+          return '<div class="sig s-warn"><div class="sdot dwarn"></div><div class="sig-body"><div class="sig-ttl">Outbound = 0 — весь трафік inbound (DOU 38%, Inbound 35%, Instagram 11%)</div><div class="sig-det">Нульовий активний соурсинг. Додавання outbound може суттєво змінити ситуацію — запланований запуск.</div></div></div>';
+        }
+        const emObReplyPct = emObSig.reachedOut > 0 ? Math.round(emObSig.replied / emObSig.reachedOut * 100) : 0;
+        const obOk = emObReplyPct >= 10;
+        return '<div class="sig ' + (obOk ? 's-ok' : 's-warn') + '"><div class="sdot ' + (obOk ? 'dok' : 'dwarn') + '"></div><div class="sig-body"><div class="sig-ttl">Outbound: ' + emObLeadsSig + ' лідів · ' + emObSig.reachedOut + ' reached out · ' + emObSig.replied + ' replied (' + emObReplyPct + '%) · ' + emObRSSig + ' RS</div><div class="sig-det">' + (obOk ? 'Reply rate ' + emObReplyPct + '% — в нормі.' : 'Reply rate ' + emObReplyPct + '% — нижче 10%. Перевір меседж або цільову аудиторію.') + '</div></div></div>';
+      })()}
+    `;
   }
 }
 
-// ═══════════════════ INIT ═══════════════════
 render('pa');
 render('em');
 </script>
