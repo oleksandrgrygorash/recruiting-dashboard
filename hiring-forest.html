@@ -169,7 +169,7 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
 <div class="panel active" id="panel-pa">
 
 <h2>Product Analyst — Hiring Forecast</h2>
-<p class="sub">Відкрита: 26 берез. 2026 · 3 тижні · 14 inbound · 35 outbound leads · 2 активних кандидати · 0 hires · Рекрутер: Юлія Комар · HM: Kateryna Starovoitenko</p>
+<p class="sub">Відкрита: 26 берез. 2026 · 3 тижні · 15 inbound · 46 outbound leads · 3 активних кандидати · 0 hires · Рекрутер: Юлія Комар · HM: Kateryna Starovoitenko</p>
 
 <!-- ── PLANNING ── -->
 <div class="section-plan">
@@ -251,9 +251,9 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
   <div class="ctitle">Конверсії воронки — підкрути для планування таргету</div>
   <div class="slider-grid">
     <div class="slider-item">
-      <div class="slider-head"><span class="slider-lbl">App Review → RS</span><span class="slider-val" id="sv-appToRS-pa" style="color:#BA7517;">21%</span></div>
-      <input type="range" min="5" max="80" step="1" value="21" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-appToRS-pa').textContent=this.value+'%';setConv('appToRS',+this.value,'pa')">
-      <div class="slider-foot"><span>факт PA: 21% (3/14)</span><span>база #38: 35%</span></div>
+      <div class="slider-head"><span class="slider-lbl">App Review → RS</span><span class="slider-val" id="sv-appToRS-pa" style="color:#BA7517;">27%</span></div>
+      <input type="range" min="5" max="80" step="1" value="27" style="width:100%;accent-color:#185FA5;" oninput="document.getElementById('sv-appToRS-pa').textContent=this.value+'%';setConv('appToRS',+this.value,'pa')">
+      <div class="slider-foot"><span>факт PA: 27% (4/15)</span><span>база #38: 35%</span></div>
     </div>
     <div class="slider-item">
       <div class="slider-head"><span class="slider-lbl">Outbound → RS</span><span class="slider-val" id="sv-obToRS-pa" style="color:#BA7517;">10%</span></div>
@@ -305,48 +305,25 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
       <div class="s-flow">
         <div class="s-node">
           <div class="s-lbl" style="color:#185FA5;">App Review</div>
-          <div class="s-val" style="color:#185FA5;">14</div>
+          <div class="s-val" style="color:#185FA5;">15</div>
           <div class="s-sub" style="color:#6b6b67;">всього inbound</div>
           <div class="pct-tag" id="inPct149-pa"></div>
         </div>
         <div class="s-arr">→</div>
         <div style="font-size:11px;line-height:1.8;">
-          <div style="color:#185FA5;">● 3 passed (RS)</div>
+          <div style="color:#185FA5;">● 4 passed (RS)</div>
           <div style="color:#E24B4A;">✕ 11 archived</div>
-          <div style="font-size:9px;color:#9b9b96;margin-top:3px;">конверсія App→RS:<br>21% (факт PA)</div>
+          <div style="font-size:9px;color:#9b9b96;margin-top:3px;">конверсія App→RS:<br>27% (факт PA)</div>
         </div>
       </div>
     </div>
     <div class="stream s-out">
       <div class="s-title" style="color:#085041;">Outbound потік</div>
-      <div class="s-flow">
-        <div class="s-node">
-          <div class="s-lbl" style="color:#0F6E56;">New Lead</div>
-          <div class="s-val" style="color:#0F6E56;">35</div>
-          <div class="s-sub" style="color:#6b6b67;">всього лідів</div>
-        </div>
-        <div class="s-arr">→</div>
-        <div class="s-node">
-          <div class="s-lbl" style="color:#0F6E56;">Reached Out</div>
-          <div class="s-val" style="color:#0F6E56;">19</div>
-          <div class="s-sub" style="color:#6b6b67;">54%</div>
-        </div>
-        <div class="s-arr">→</div>
-        <div class="s-node">
-          <div class="s-lbl" style="color:#0F6E56;">Replied</div>
-          <div class="s-val" style="color:#0F6E56;">4</div>
-          <div class="s-sub" style="color:#6b6b67;">21%</div>
-        </div>
-        <div class="s-arr">→</div>
-        <div style="font-size:11px;line-height:1.8;">
-          <div style="color:#E24B4A;">✕ 4 archived</div>
-          <div style="font-size:9px;color:#9b9b96;margin-top:3px;">жоден не дійшов до RS</div>
-        </div>
-      </div>
+      <div class="s-flow" id="outboundFlow-pa"></div>
     </div>
   </div>
   <div class="merge-row">
-    <div class="ml"></div><div class="mpill">злиття на Recruitment Screening · RS досягнуто: <b>3</b> (inbound)</div><div class="mr"></div>
+    <div class="ml"></div><div class="mpill">злиття на Recruitment Screening · RS досягнуто: <b>4</b> (inbound)</div><div class="mr"></div>
   </div>
   <div class="hfunnel" id="factFunnel149-pa"></div>
 </div>
@@ -372,8 +349,8 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
   <div class="card">
     <div class="ctitle">Поточний стан</div>
     <div class="pill-row">
-      <div class="pill"><div class="pv" style="color:#185FA5;">14</div><div class="pl">Inbound</div></div>
-      <div class="pill"><div class="pv" style="color:#0F6E56;">35</div><div class="pl">Outbound Leads</div></div>
+      <div class="pill"><div class="pv" style="color:#185FA5;">15</div><div class="pl">Inbound</div></div>
+      <div class="pill"><div class="pv" style="color:#0F6E56;">46</div><div class="pl">Outbound Leads</div></div>
       <div class="pill"><div class="pv">2</div><div class="pl">Активних</div></div>
       <div class="pill"><div class="pv" style="color:#E24B4A;">11</div><div class="pl">Archived</div></div>
     </div>
@@ -526,16 +503,19 @@ h2{font-size:18px;font-weight:500;margin-bottom:2px;}
 // ═══════════════════ STATE ═══════════════════
 const VACANCIES = {
   pa: {
-    CV: {appToRS:.21, rsToCV:.70, cvToTI:.60, tiToHire:.10, tiToNext:.50, obToRS:.10, obLeads:0},
-    curPri: 'med', facts: {comms:0, rs:2, ti:0, tiNext:0, leads:4}, facts2: {comms:0, rs:1, ti:0, leads:19},
-    factsAccum: {comms:14, rs:3, ti:0, leads:35}, // накопичений факт за весь час
-    sources: [ // breakdown по джерелах (з Passthrough Rate by Source Type)
-      {name:'Inbound (Applied)', app:9,  rs:0},
-      {name:'DOU',               app:3,  rs:2},
-      {name:'Referral',          app:2,  rs:1},
+    CV: {appToRS:.27, rsToCV:.70, cvToTI:.60, tiToHire:.10, tiToNext:.50, obToRS:.10, obLeads:0},
+    curPri: 'med',
+    facts:  {comms:6, rs:2, ti:0, tiNext:0, leads:4},  // факт 06–12 Apr (inbound=6, outbound=4)
+    facts2: {comms:3, rs:0, ti:0, leads:30},            // факт 13–15 Apr незакінч. (inbound=3, outbound=30)
+    factsAccum: {comms:15, rs:4, ti:0, leads:46},       // накопичений за весь час (Ashby API 15 Apr)
+    outbound: {newLead:46, reachedOut:34, replied:1, archived:5},
+    sources: [
+      {name:'Inbound (Applied+Djinni)', app:9,  rs:0},
+      {name:'DOU',                      app:3,  rs:2},
+      {name:'Referral',                 app:3,  rs:2},
     ],
-    openedAt: new Date('2026-03-26'), today: new Date('2026-04-13'),
-    weeksOpen: 3, inbound: 14, targetWeeks: 5, deadlineWeeks: 8, mode: 'priority',
+    openedAt: new Date('2026-03-26'), today: new Date('2026-04-15'),
+    weeksOpen: 3, inbound: 15, targetWeeks: 5, deadlineWeeks: 8, mode: 'priority',
   },
   em: {
     CV: {appToRS:.20, rsToCV:.69, cvToTI:.77, tiToHire:.10, tiToNext:.19, obToRS:.28, obLeads:0},
@@ -632,7 +612,7 @@ function renderPvF(tgtTI, tgtRS, tgtCV, tgtApp, v, daysLeft) {
 
   // Outbound Leads рядок
   const obLeadsTarget = CV.obLeads || 0;
-  const factLeadsPW = vId === 'pa' ? +(35 / wo).toFixed(1) : 0; // накопичено / тижні
+  const factLeadsPW = vId === 'pa' ? +((v.factsAccum||{}).leads / wo || 0).toFixed(1) : 0; // накопичено / тижні
   const factObRS = +(factLeadsPW * CV.obToRS).toFixed(1);
 
   const stages = [
@@ -902,6 +882,40 @@ function render(vId) {
     const appPct = Math.min(100, Math.round(v.inbound/tgtApp2wk*100));
     const appC = appPct>=100?'#0F6E56':appPct>=70?'#BA7517':'#E24B4A';
     document.getElementById('inPct149-pa').innerHTML = `<span style="color:${appC};">${appPct}% від таргету (${tgtApp2wk})</span>`;
+
+    // Outbound flow — динамічно зі стейту
+    const ob = v.outbound || {};
+    const obNewLead   = ob.newLead   || (v.factsAccum||{}).leads || 0;
+    const obReached   = ob.reachedOut || 0;
+    const obReplied   = ob.replied    || 0;
+    const obArchived  = ob.archived   || 0;
+    const reachedPct  = obNewLead > 0 ? Math.round(obReached / obNewLead * 100) : 0;
+    const repliedPct  = obReached > 0 ? Math.round(obReplied / obReached * 100) : 0;
+    const obRS        = (v.factsAccum||{}).rsFromOb || 0;
+    document.getElementById('outboundFlow-pa').innerHTML = `
+      <div class="s-node">
+        <div class="s-lbl" style="color:#0F6E56;">New Lead</div>
+        <div class="s-val" style="color:#0F6E56;">${obNewLead}</div>
+        <div class="s-sub" style="color:#6b6b67;">всього лідів</div>
+      </div>
+      <div class="s-arr">→</div>
+      <div class="s-node">
+        <div class="s-lbl" style="color:#0F6E56;">Reached Out</div>
+        <div class="s-val" style="color:#0F6E56;">${obReached}</div>
+        <div class="s-sub" style="color:#6b6b67;">${reachedPct}%</div>
+      </div>
+      <div class="s-arr">→</div>
+      <div class="s-node">
+        <div class="s-lbl" style="color:#0F6E56;">Replied</div>
+        <div class="s-val" style="color:#0F6E56;">${obReplied}</div>
+        <div class="s-sub" style="color:#6b6b67;">${repliedPct}%</div>
+      </div>
+      <div class="s-arr">→</div>
+      <div style="font-size:11px;line-height:1.8;">
+        ${obRS > 0 ? `<div style="color:#0F6E56;">● ${obRS} RS</div>` : ''}
+        ${obArchived > 0 ? `<div style="color:#E24B4A;">✕ ${obArchived} archived</div>` : ''}
+        <div style="font-size:9px;color:#9b9b96;margin-top:3px;">${obRS === 0 ? 'жоден не дійшов до RS' : ''}</div>
+      </div>`;
 
     const sfn = [
       {lbl:'RS',            val:(v.factsAccum||{}).rs||0, tgt:Math.round(kpiRS*v.weeksOpen),  bg:'#EEEDFE', bc:'#534AB780', tc:'#534AB7'},
